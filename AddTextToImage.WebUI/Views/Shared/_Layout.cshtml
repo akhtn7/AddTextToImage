@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    @Styles.Render("~/Content/css")
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    @Scripts.Render("~/bundles/spectrum")
+    @Scripts.Render("~/bundles/app")
+
+    
+</head>
+<body>
+    <img id="demo-box" src="~/Content/Images/demo.png" />
+    <script type="text/javascript">
+        var basePath = '@Url.Content("~")';
+    </script>
+    <div class="container">
+        <header>
+            <div>
+                <div id="error-message-holder">
+                    <div id="error-message" style="display:none">
+                        Error
+                    </div>
+                </div>
+                <div class="header">
+                    <span class="logo">
+                        <img src="~/Content/Images/logo.png" />
+                    </span>
+                    <div class="title">
+                        <h1> Demo site for codeproject article</h1>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        @RenderBody()
+
+        <footer>
+            <div class ="footer">
+                <div> Footer text
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

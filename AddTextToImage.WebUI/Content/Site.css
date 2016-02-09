@@ -1,0 +1,390 @@
+﻿body {
+    font-family:  Arial,Helvetica,sans-serif;
+    font-size: 14px;
+    text-align: center;
+}
+a {
+    text-decoration: none;
+}
+h1{
+    font-size: 20px;
+    color: #B1B1B1;
+}
+
+#demo-box{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+.header {
+    margin: 5px;
+}
+.logo{
+    width: 300px;
+    height: 60px;
+    display: inline-block;
+    float: left;
+}
+.title{
+    display: inline-block;
+    padding-top: 6px;
+}
+
+
+
+.header-line{
+    margin-bottom: 20px;
+    background: transparent url("/Content/Images/header_bgr.png") repeat scroll left top;
+    height:21px;
+}
+
+#drop-file {
+    border: 4px dashed #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.drag-picture {
+    font-size: 32px;
+    color: #C5C5C5;
+    margin-bottom: 10px;
+}
+
+.drag-picture-img{
+    height: 200px;
+}
+
+.select-picture {
+    font-size: 20px;
+    color: #C5C5C5;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+
+
+#fileUpload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+
+.delete-sign {
+    cursor: pointer;
+}
+
+
+
+.btn {
+    background-color: #337ab7;
+    border-color: #2E6DA4; 
+    border: 1px solid #2e6da4;
+    border-radius: 4px;
+    color: #ccc;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    padding: 6px 12px;
+    position: relative;
+    font-size: 13px;
+}
+.btn:hover {
+    background-color: #458dcd;
+}
+
+.disable{
+    background-color: #458dcd;
+}
+
+.settings-left {
+    min-width: 80px;
+    width: 39%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.settings-left-text {
+    width: 78%;
+    display: inline-block;
+}
+
+.settings-right {
+    display: inline-block;
+    width: 59%;
+}
+
+.settings-right-add {
+    width: 20%;
+    display: inline-block;
+    text-align: right;
+}
+
+.settings-ctl {
+    width: 100%;
+}
+
+#text-templates-dialog {
+    padding: 0.5em;
+}
+
+#text-gallery-list {
+    width: 100%;
+}
+
+#text-templates-holder {
+    height: 320px;
+    max-height: 320px;
+    overflow: auto;
+    padding-right: 2%;
+}
+
+#text-gallery {
+    overflow: hidden;
+}
+
+#text-gallery div {
+    position: relative;
+    border: 1px solid #C5C5C5;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding: 1px;
+    height: 100px;
+    cursor: pointer;
+    background: #FFFFFF none repeat scroll 0% 0%;
+}
+
+#text-gallery div:hover {
+    border: 1px solid #0F00C0;
+}
+
+#text-gallery img {
+position: absolute;
+        max-height: 100%;
+        max-width: 100%;
+        margin: auto;
+        right: 0px;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+    }
+
+#text-gallery .text-template-item-selected {
+    border: 1px solid #000000;
+}
+
+
+#clipart-template-dialog {
+    padding: 0.5em;
+}
+
+#clipart-gallery-list {
+    width: 100%;
+}
+
+#clipart-templates-holder {
+    height: 320px;
+    max-height: 320px;
+    overflow: auto;
+    padding-right: 2%;
+}
+
+#clipart-gallery {
+    overflow: hidden;
+}
+
+#clipart-gallery div {
+        position: relative;
+        border: 1px solid #C5C5C5;
+        margin: 2px;
+        padding: 1px;
+        height: 100px;
+        width: 30%;
+        cursor: pointer;
+        background: #FFFFFF none repeat scroll 0% 0%;
+        display: inline-block;
+    }
+
+#clipart-gallery div:hover {
+    border: 1px solid #0F00C0;
+}
+
+#clipart-gallery img {
+        position: absolute;
+        max-height: 100%;
+        max-width: 100%;
+        margin: auto;
+        right: 0px;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+    }
+
+
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+@media (min-width: 768px) {
+    .container {
+        width: 750px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        width: 970px;
+    }
+}
+
+
+.settings {
+    /*float: left;*/
+    display: inline-block;
+    text-align: left;
+    border: 1px solid #2e6da4;
+    background: #F2F2F2 none repeat scroll 0% 0%;
+    height: 100%;
+    border-radius: 3px;
+}
+
+.settings > div {
+    padding: 6px;
+}
+
+#image-main {
+    display: inline-block;
+    vertical-align: top;
+}
+
+@media (min-width: 479px) and (max-width: 767px) {
+    .settings {
+        width: 42%;
+        margin-right: 2%;
+    }
+
+    #image-main {
+        width: 55%;
+    }
+}
+
+@media (min-width: 768px) {
+    .settings {
+        width: 30%;
+        margin-right: 2%;
+    }
+
+    #image-main {
+        width: 67%;
+        /*height: 450px;*/
+    }
+}
+
+
+
+#samples-holder {
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+.select-picture-gallery {
+    color: #c5c5c5;
+    font-size: 20px;
+    margin-bottom: 1em;
+    margin-top: 1em;
+}
+
+.sample-item {
+    border: 1px solid #ccc;
+    padding: 2px;
+    margin: 2px;
+    opacity: 1;
+    transition: opacity .25s ease-in-out;
+    -moz-transition: opacity .25s ease-in-out;
+    -webkit-transition: opacity .25s ease-in-out;
+    -ms-transition: opacity .25s ease-in-out;
+    -o-transition: opacity .25s ease-in-out;
+}
+
+    .sample-item:hover {
+        cursor: pointer;
+        opacity: 0.5;
+    }
+
+.sample-item-img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+}
+
+@media (max-width: 767px) {
+    .sample {
+        width: 49%;
+        display: inline-block;
+    }
+}
+
+@media (min-width: 768px) {
+    .sample {
+        width: 24%;
+        display: inline-block;
+    }
+
+    #select-image {
+    }
+}
+
+
+
+@media (min-width: 992px) {
+}
+
+
+
+@media (min-width: 1200px) {
+}
+
+
+.footer{
+    height: 20px;
+    background: #F2F2F2 none repeat scroll 0% 0%;
+}
+
+
+.xui-dialog .ui-widget-header {
+    border: 1px solid #2e6da4;
+    background: #458dcd;
+    color: #ccc;
+    font-weight: bold;
+}
+.xui-dialog .ui-button {
+    background: #337ab7;
+    border-color: #2E6DA4; 
+    border: 1px solid #2e6da4;
+    border-radius: 4px;
+    color: #ccc;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    height: 32px;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 13px;
+    padding: 0px 10px 0px 10px;
+}
+.xui-dialog .ui-button:hover {
+    background: #458dcd;
+}
+.xui-dialog .ui-dialog-titlebar-close {
+  display: none;
+}

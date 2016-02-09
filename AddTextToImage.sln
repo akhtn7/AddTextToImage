@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddTextToImage.Domain", "AddTextToImage.Domain\AddTextToImage.Domain.csproj", "{C5E6C479-3E78-4A85-920C-41510151FED8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddTextToImage.TemplateEditor", "AddTextToImage.TemplateEditor\AddTextToImage.TemplateEditor.csproj", "{408138E4-1C60-4558-9817-05DEF02AB232}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddTextToImage.WebUI", "AddTextToImage.WebUI\AddTextToImage.WebUI.csproj", "{CA0481E9-7025-4C99-A3D0-88145EB65CED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddTextToImage.ImageGenarator", "AddTextToImage.ImageGenarator\AddTextToImage.ImageGenarator.csproj", "{FE2D38FA-0FA8-4C00-8C7F-24B95C64BC61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddTextToImage.Data", "AddTextToImage.Data\AddTextToImage.Data.csproj", "{D781A9D0-2F16-4F5C-8E15-11AB70715854}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddTextToImage.UnitTests", "AddTextToImage.UnitTests\AddTextToImage.UnitTests.csproj", "{6C49223C-29DB-460D-B71D-9516E3563C14}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C5E6C479-3E78-4A85-920C-41510151FED8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5E6C479-3E78-4A85-920C-41510151FED8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5E6C479-3E78-4A85-920C-41510151FED8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5E6C479-3E78-4A85-920C-41510151FED8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{408138E4-1C60-4558-9817-05DEF02AB232}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{408138E4-1C60-4558-9817-05DEF02AB232}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{408138E4-1C60-4558-9817-05DEF02AB232}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{408138E4-1C60-4558-9817-05DEF02AB232}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA0481E9-7025-4C99-A3D0-88145EB65CED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA0481E9-7025-4C99-A3D0-88145EB65CED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA0481E9-7025-4C99-A3D0-88145EB65CED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA0481E9-7025-4C99-A3D0-88145EB65CED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE2D38FA-0FA8-4C00-8C7F-24B95C64BC61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE2D38FA-0FA8-4C00-8C7F-24B95C64BC61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE2D38FA-0FA8-4C00-8C7F-24B95C64BC61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE2D38FA-0FA8-4C00-8C7F-24B95C64BC61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D781A9D0-2F16-4F5C-8E15-11AB70715854}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D781A9D0-2F16-4F5C-8E15-11AB70715854}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D781A9D0-2F16-4F5C-8E15-11AB70715854}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D781A9D0-2F16-4F5C-8E15-11AB70715854}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C49223C-29DB-460D-B71D-9516E3563C14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C49223C-29DB-460D-B71D-9516E3563C14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C49223C-29DB-460D-B71D-9516E3563C14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C49223C-29DB-460D-B71D-9516E3563C14}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

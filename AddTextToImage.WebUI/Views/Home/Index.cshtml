@@ -1,0 +1,285 @@
+﻿@using AddTextToImage.WebUI.ViewModels
+@model HomeIndexViewModel
+
+@{
+    ViewBag.Title = "Add Text To Image";
+}
+<div id="main">
+    
+    <div id="select-image">
+        <div style="text-align: center; display:block">
+            <div>
+                <div id="drop-file">
+                    <div class="drag-picture">
+                        Drag your picture here
+                    </div>
+                    <div class="drag-picture-img">
+                        <img src="~/Content/Images/file-placeholder.png" />
+                    </div>
+                    <div class="select-picture">
+                        or select picture from:
+                    </div>
+                    <div>
+                        <div class="btn">
+                            <span>Computer</span>
+                            <input id="fileUpload" type="file" accept="image/jpeg,image/png,image/gif" value="Computer" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="samples-holder" data-sample-total-page="@Model.SampleTotalPage">
+            <div class="select-picture-gallery">or select a picture from the gallery</div>
+            <div>
+                <div>
+                    @{int i = 0;
+                    foreach (var id in Model.SampleIds)
+                    {
+                        string sampleId = "sample" + i.ToString();
+                        <div class="sample">
+                            <div class="sample-item">
+                                <img id="@sampleId" data-id="@id" class="sample-item-img" src="~/Api/Sample/Thumbnail/@id/" />
+                            </div>
+                        </div>
+                        if (i == 3)
+                        {
+                            @:</div><div>
+                    }
+                        i++;
+                    }
+                    }
+                </div>
+            </div>
+        </div>
+        <div style="margin:10px">
+            <div style="display:inline-block">
+                <input type="button" id="btn-sample-prev" name="btn-sample-prev" class="btn disable" disabled value="&nbsp;&nbsp;&nbsp;&lt;&lt;&nbsp;&nbsp;&nbsp;" />
+            </div>
+            <div style="display:inline-block">
+                <input type="button" id="btn-sample-next" name="btn-sample-next" class="btn" value="&nbsp;&nbsp;&gt;&gt;&nbsp;&nbsp;" />
+            </div>
+        </div>
+    </div>
+
+
+    <div id="image-worker" style="display:none">
+
+        <div class="settings">
+            <div>
+                <div class="settings-left">
+                    <label for="sample-text">Text:</label>
+                </div>
+                <div class="settings-right">
+                    <input id="sample-text" type="text" maxlength="50" class="settings-ctl" value="Enter text here" />
+                </div>
+            </div>
+            <div>
+                <div class="settings-left">
+                </div>
+                <div class="settings-right">
+                    <input id="btn-add-text" type="button" class="btn settings-ctl" value="Add text" />
+                </div>
+            </div>
+            <div>
+                <div class="settings-left">
+                    <label for="btn-template">Template:</label>
+                </div>
+                <div class="settings-right">
+                    <button id="btn-template" name="btn-template" class="btn settings-ctl" type="button" data-text-template-id="@Model.SelectedTextTemplateId" data-text-template-gallery-id="@Model.SelectedTextGalleryId" data-text-template-text-color1="@Model.SelectedTextTemplateTextColor1">
+                        <div id="template-name">@Model.SelectedTextTemplateName</div>
+                    </button>
+                </div>
+            </div>
+            <div>
+                <div class="settings-left">
+                    <label for="font-size">Font Size:</label>
+                </div>
+                <div class="settings-right">
+                    <select id="font-size" class="settings-ctl">
+                        <option>20</option>
+                        <option>25</option>
+                        <option>30</option>
+                        <option>35</option>
+                        <option>40</option>
+                        <option>45</option>
+                        <option>50</option>
+                        <option>55</option>
+                        <option>60</option>
+                        <option>65</option>
+                        <option>70</option>
+                        <option>75</option>
+                        <option>80</option>
+                        <option>85</option>
+                        <option>90</option>
+                        <option>95</option>
+                        <option selected="">100</option>
+                        <option>105</option>
+                        <option>110</option>
+                        <option>115</option>
+                        <option>120</option>
+                        <option>125</option>
+                        <option>130</option>
+                        <option>135</option>
+                        <option>140</option>
+                        <option>145</option>
+                        <option>150</option>
+                        <option>155</option>
+                        <option>160</option>
+                        <option>165</option>
+                        <option>170</option>
+                        <option>175</option>
+                        <option>180</option>
+                        <option>185</option>
+                        <option>190</option>
+                        <option>195</option>
+                        <option>200</option>
+                        <option>205</option>
+                        <option>210</option>
+                        <option>215</option>
+                        <option>220</option>
+                        <option>225</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <div class="settings-left">
+                    <label for="rotation">Rotation:</label>
+                </div>
+                <div class="settings-right">
+                    <select id="rotation" name="rotation" class="settings-ctl">
+                        <option value="-180">-180&deg;</option>
+                        <option value="-175">-175&deg;</option>
+                        <option value="-170">-170&deg;</option>
+                        <option value="-165">-165&deg;</option>
+                        <option value="-160">-160&deg;</option>
+                        <option value="-155">-155&deg;</option>
+                        <option value="-150">-150&deg;</option>
+                        <option value="-145">-145&deg;</option>
+                        <option value="-140">-140&deg;</option>
+                        <option value="-135">-135&deg;</option>
+                        <option value="-130">-130&deg;</option>
+                        <option value="-125">-125&deg;</option>
+                        <option value="-120">-120&deg;</option>
+                        <option value="-115">-115&deg;</option>
+                        <option value="-110">-110&deg;</option>
+                        <option value="-105">-105&deg;</option>
+                        <option value="-100">-100&deg;</option>
+                        <option value="-95">-95&deg;</option>
+                        <option value="-90">-90&deg;</option>
+                        <option value="-85">-85&deg;</option>
+                        <option value="-80">-80&deg;</option>
+                        <option value="-75">-75&deg;</option>
+                        <option value="-70">-70&deg;</option>
+                        <option value="-65">-65&deg;</option>
+                        <option value="-60">-60&deg;</option>
+                        <option value="-55">-55&deg;</option>
+                        <option value="-50">-50&deg;</option>
+                        <option value="-45">-45&deg;</option>
+                        <option value="-40">-40&deg;</option>
+                        <option value="-35">-35&deg;</option>
+                        <option value="-30">-30&deg;</option>
+                        <option value="-25">-25&deg;</option>
+                        <option value="-20">-20&deg;</option>
+                        <option value="-15">-15&deg;</option>
+                        <option value="-10">-10&deg;</option>
+                        <option value="-5">-5&deg;</option>
+                        <option value="0" selected>0&deg;</option>
+                        <option value="5">5&deg;</option>
+                        <option value="10">10&deg;</option>
+                        <option value="15">15&deg;</option>
+                        <option value="20">20&deg;</option>
+                        <option value="25">25&deg;</option>
+                        <option value="30">30&deg;</option>
+                        <option value="35">35&deg;</option>
+                        <option value="40">40&deg;</option>
+                        <option value="45">45&deg;</option>
+                        <option value="50">50&deg;</option>
+                        <option value="55">55&deg;</option>
+                        <option value="60">60&deg;</option>
+                        <option value="65">65&deg;</option>
+                        <option value="70">70&deg;</option>
+                        <option value="75">75&deg;</option>
+                        <option value="80">80&deg;</option>
+                        <option value="85">85&deg;</option>
+                        <option value="90">90&deg;</option>
+                        <option value="95">95&deg;</option>
+                        <option value="100">100&deg;</option>
+                        <option value="105">105&deg;</option>
+                        <option value="110">110&deg;</option>
+                        <option value="115">115&deg;</option>
+                        <option value="120">120&deg;</option>
+                        <option value="125">125&deg;</option>
+                        <option value="130">130&deg;</option>
+                        <option value="135">135&deg;</option>
+                        <option value="140">140&deg;</option>
+                        <option value="145">145&deg;</option>
+                        <option value="150">150&deg;</option>
+                        <option value="155">155&deg;</option>
+                        <option value="160">160&deg;</option>
+                        <option value="165">165&deg;</option>
+                        <option value="170">170&deg;</option>
+                        <option value="175">175&deg;</option>
+                        <option value="180">180&deg;</option>
+                    </select>
+                </div>
+
+            </div>
+            <div>
+                <div class="settings-left">
+                    <label for="font-color">Font Color:</label>
+                </div>
+                <div class="settings-right">
+                    <input id="font-color" type='text' class="settings-ctl" />
+                </div>
+            </div>
+            <div>
+                <div class="settings-left">
+                    <label for="btn-template-clipart">Cliparts:</label>
+                </div>
+                <div class="settings-right">
+                    <input type="button" id="btn-template-clipart" name="btn-template-clipart" class="btn settings-ctl" value="Add" />
+                </div>
+            </div>
+            <div>
+                <div class="settings-left">
+                    <label>Export:</label>
+                </div>
+                <div class="settings-right">
+                    <a href="/api/Image/Result/" id="save-result" class="btn">Save</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="image-main">
+            <svg id="canvas" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" baseProfile="full" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 0 0">
+            </svg>
+        </div>
+    </div>
+</div>
+
+
+<div>Test Buttons
+    <br/>
+    <input type="button" id="save" name="save" value="Save" />
+
+    <input type="button" id="test" name="test" value="Test" />
+</div>
+
+<div style="display:none">
+    <div id="hidden-images">
+    </div>
+    <div id="text-templates-dialog">
+        <div style="height: 30px;">
+            @Html.DropDownList("text-gallery-list", Model.TextGalleryList)
+        </div>
+        <div id="text-templates-holder">
+        </div>
+    </div>
+    <div id="clipart-template-dialog">
+        <div style="height: 30px;">
+            @Html.DropDownList("clipart-gallery-list", Model.ClipartGalleryList)
+        </div>
+        <div id="clipart-templates-holder">
+        </div>
+    </div>
+</div>
