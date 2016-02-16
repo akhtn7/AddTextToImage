@@ -3,9 +3,15 @@
 
 namespace AddTextToImage.Domain.Entities
 {
-    //XXXX
-    public enum ModelItemType { Text, Clipart }
+    public enum ModelItemType 
+    { 
+        Text, 
+        Clipart 
+    }
 
+    ///<summary>
+    ///Base class for all entity classes
+    ///</summary>
     public abstract class Entity
     {
         //[JsonProperty(PropertyName = "ModelId")]

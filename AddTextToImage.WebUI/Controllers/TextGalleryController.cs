@@ -9,10 +9,16 @@ using System.Web.Http;
 
 namespace AddTextToImage.WebUI.Controllers
 {
+    ///<summary>
+    ///This api controller provides method which returns a list of TextGallery items.
+    ///</summary>
     public class TextGalleryController : ApiController
     {
         private readonly IRepository<TextGallery> _textGalleryRepository;
 
+        ///<summary>
+        /// Creates a new instance of the TextGalleryController class.
+        ///</summary>
         public TextGalleryController(IRepository<TextGallery> textGalleryRepository)
         {
             _textGalleryRepository = textGalleryRepository;
@@ -25,7 +31,8 @@ namespace AddTextToImage.WebUI.Controllers
         {
             List<TextGallery> templateGalleryList =
                 (from tg in _textGalleryRepository.GetAllWithInclude("Items")
-                 select tg).ToList<TextGallery>();
+                 select tg)
+                 .ToList<TextGallery>();
 
             return templateGalleryList;
         }

@@ -6,6 +6,9 @@ namespace AddTextToImage.Data.Context
 {
     class Db : DbContext
     {
+        ///<summary>
+        /// Creates a new instance of the Db class.
+        ///</summary>
         public Db() : base("EFDbContext") 
         {
             //Database.SetInitializer<EFDbContext>(null);

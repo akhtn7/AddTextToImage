@@ -14,12 +14,16 @@ using System.Web.Http;
 
 namespace AddTextToImage.WebUI.Controllers
 {
+
     public class ImageController : ApiController
     {
         private readonly IRepository<Model> _modelRepository;
         private readonly IRepository<TextTemplate> _textTemplateRepository;
         private readonly IRepository<ClipartTemplate> _clipartTemplateRepository;
 
+        ///<summary>
+        /// Creates a new instance of the ImageController class.
+        ///</summary>
         public ImageController(IRepository<Model> modelRepository, IRepository<TextTemplate> textTemplateRepository, IRepository<ClipartTemplate> clipartTemplateRepository)
         {
             this._modelRepository = modelRepository;
@@ -27,7 +31,9 @@ namespace AddTextToImage.WebUI.Controllers
             this._clipartTemplateRepository = clipartTemplateRepository;
         }
 
-
+        ///<summary>
+        ///Returns generated image for TextTemplate or ClipartTemplate item depends on modelItem.ItemType.
+        ///</summary>
         [HttpGet]
         public HttpResponseMessage ModelItem(int id, [FromUri]ModelItem modelItem)
         {
@@ -35,18 +41,23 @@ namespace AddTextToImage.WebUI.Controllers
 
             if (modelItem.ItemType == 0)
             {
-                template = (
-                    from t in _textTemplateRepository.GetAllWithInclude("Font")
+                template = 
+                   (from t in _textTemplateRepository.GetAllWithInclude("Font")
                     where t.Id == modelItem.TemplateId
-                    select t
-                    ).FirstOrDefault();
+                    select t)
+                    .FirstOrDefault();
             }
             else
             {
-                template = (from t in _clipartTemplateRepository.GetAllWithInclude("Font")
-                            where t.Id == modelItem.TemplateId
-                            select t).FirstOrDefault();
+                template = 
+                   (from t in _clipartTemplateRepository.GetAllWithInclude("Font")
+                    where t.Id == modelItem.TemplateId
+                    select t)
+                    .FirstOrDefault();
             }
+
+            if (template == null)
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
 
             string fontPath = HostingEnvironment.MapPath("~/fonts/");
 
@@ -65,41 +76,49 @@ namespace AddTextToImage.WebUI.Controllers
             }
         }
 
-
+        ///<summary>
+        ///Returns a result image. 
+        ///</summary>
         [HttpGet]
         public HttpResponseMessage Result(int id)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
 
             var model = _modelRepository.Get(id);
-            if (model != null)
+
+            if (model == null)
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+
+            ImageConverter ic = new ImageConverter();
+            Image img = (Image)ic.ConvertFrom(model.Image);
+            Bitmap bmpResult = new Bitmap(img);
+
+            Graphics graphics = Graphics.FromImage(bmpResult);
+
+            foreach (var modelItem in model.Items)
             {
-                ImageConverter ic = new ImageConverter();
-                Image img = (Image)ic.ConvertFrom(model.Image);
-                Bitmap bmpResult = new Bitmap(img);
+                TemplateBase template = null;
 
-                Graphics graphics = Graphics.FromImage(bmpResult);
-
-                foreach (var modelItem in model.Items)
+                if (modelItem.ItemType == 0)
                 {
-                    TemplateBase template = null;
+                    template =
+                        (from t in _textTemplateRepository.GetAllWithInclude("Font")
+                         where t.Id == modelItem.TemplateId
+                         select t)
+                         .FirstOrDefault();
+                }
+                else
+                {
+                    template =
+                        (from t in _clipartTemplateRepository.GetAllWithInclude("Font")
+                         where t.Id == modelItem.TemplateId
+                         select t)
+                         .FirstOrDefault();
 
-                    if (modelItem.ItemType == 0)
-                    {
-                        template =
-                            (from t in _textTemplateRepository.GetAllWithInclude("Font")
-                             where t.Id == modelItem.TemplateId
-                             select t).FirstOrDefault();
-                    }
-                    else
-                    {
-                        template =
-                            (from t in _clipartTemplateRepository.GetAllWithInclude("Font")
-                             where t.Id == modelItem.TemplateId
-                             select t).FirstOrDefault();
+                }
 
-                    }
-
+                if (template != null)
+                {
                     string fontPath = HostingEnvironment.MapPath("~/fonts/");
 
                     OutlineTextProcessor outlineTextProcessor = new OutlineTextProcessor(modelItem, template, fontPath);
@@ -107,27 +126,22 @@ namespace AddTextToImage.WebUI.Controllers
 
                     graphics.DrawImage((Image)image, new Point(modelItem.PositionLeft, modelItem.PositionTop));
                 }
-
-                using (MemoryStream memoryStream = new MemoryStream())
-                {
-                    bmpResult.Save(memoryStream, ImageFormat.Png);
-
-                    response.Content = new ByteArrayContent(memoryStream.ToArray());
-                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png"); //XXXXjpg
-                    response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-                    response.Content.Headers.ContentDisposition.FileName = "avatar.png";
-                    return response;
-                }
-
-                //var fileSavePath = Path.Combine(response.Content.Server.MapPath("~/App_Data/uploads"), httpPostedFile.FileName)
-                //bmpResult.Save(@"E:\xWork\Apps\Work\AddTextToImage\AddTextToImage\App_Data\uploads\1.png");
-
-                graphics.Flush();
-                graphics.Dispose();
             }
+
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                bmpResult.Save(memoryStream, ImageFormat.Png);
+
+                response.Content = new ByteArrayContent(memoryStream.ToArray());
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png"); //ToDo jpg
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                response.Content.Headers.ContentDisposition.FileName = "avatar.png";
+            }
+
+            graphics.Flush();
+            graphics.Dispose();
 
             return response;
         }
-
     }
 }

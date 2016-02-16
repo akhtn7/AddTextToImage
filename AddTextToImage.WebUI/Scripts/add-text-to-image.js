@@ -52,11 +52,13 @@
         ModelItem.prototype.select = function () {
 
             $("#rect" + this.id).show();
+            $("#del" + this.id).show();
         }
 
         ModelItem.prototype.deselect = function () {
 
             $("#rect" + this.id).hide();
+            $("#del" + this.id).hide();
         }
 
         ModelItem.prototype.updateDatabase = function () {
@@ -67,12 +69,8 @@
                 dataType: 'json',
                 data: this.getData(),
 
-                success: function (data) {
-                    //console.log(data);
-                },
-
                 error: function (xhr, textStatus, errorThrown) {
-                    console.log('Error in Operation');
+                    errorMessage.show("The server encountered an error. Detailed description: " + errorThrown);
                 }
             });
         }
@@ -166,7 +164,7 @@
                     },
 
                     error: function (xhr, textStatus, errorThrown) {
-                        console.log('Error in Operation');
+                        errorMessage.show("The server encountered an error. Detailed description: " + errorThrown);
                     }
                 });
             }
@@ -205,7 +203,7 @@
                     }));
 
 
-                    // Create Separtly
+                    // Create separately
                     $div.on("click", function (e) {
 
                         e.stopPropagation();
@@ -338,7 +336,7 @@
                     },
 
                     error: function (xhr, textStatus, errorThrown) {
-                        console.log('Error in Operation');
+                        errorMessage.show("The server encountered an error. Detailed description: " + errorThrown);
                     }
                 });
             }
@@ -408,7 +406,7 @@
                         addModelItem(modelItem);
                     },
                     error: function (xhr, textStatus, errorThrown) {
-                        console.log(basePath + "api/Model/AddModelItem/; PUT; Error in Operation");
+                        errorMessage.show("The server encountered an error. Detailed description: " + errorThrown);
                     }
                 });
 
@@ -500,7 +498,7 @@
                     },
 
                     error: function (xhr, textStatus, errorThrown) {
-                        console.log(basePath + "api/Model/AddModelItem/; PUT; Error in Operation");
+                        errorMessage.show("The server encountered an error. Detailed description: " + errorThrown);
                     }
                 });
             });
@@ -532,13 +530,11 @@
                     imgHeigth = modelHeight * $("#image-main").width() / modelWidth;
                 }
 
-                console.log("imgHeigth: " + imgHeigth + " imgWidth:" + $("#image-main").width() + " modelHeight: " + modelHeight + " modelWidth: " + modelWidth);
-
                 $("#image-main").css("height", imgHeigth + "px");
             }
 
 
-            $("#save-result").attr("href", basePath + "api/Image/Result/" + id);
+            $("#form-save-result").attr("action", basePath + "api/Image/Result/" + id);
         }
 
         function populateFromSample(data) {
@@ -607,9 +603,9 @@
             svgDelImg.setAttribute('id', "del" + modelItem.id);
             svgDelImg.setAttribute('height', "16");
             svgDelImg.setAttribute('width', "16");
-            svgDelImg.setAttributeNS('http://www.w3.org/1999/xlink', 'href', basePath + "Content/Gallery/del.png");
+            svgDelImg.setAttributeNS('http://www.w3.org/1999/xlink', 'href', basePath + "Content/Images/delete.png");
             svgDelImg.setAttribute('x', modelItem.positionLeft);
-            svgDelImg.setAttribute('y', modelItem.positionTop);
+            svgDelImg.setAttribute('y', modelItem.positionTop - 16);
             svgDelImg.style.display = "none";
             svgDelImg.style.cursor = "pointer";
 
@@ -632,7 +628,7 @@
                 $("#img" + id).attr("height", this.height);
                 $("#rect" + id).attr("width", this.width);
                 $("#rect" + id).attr("height", this.height);
-                $("#del" + id).attr("x", parseInt($("#del" + id).attr("x")) + this.width - 16);
+                $("#del" + id).attr("x", parseInt($("#del" + id).attr("x")) + this.width);
             })
 
             $(svgMainImg).on("mousedown", onMouseDown);
@@ -641,28 +637,28 @@
             $(svgMainImg).on("mouseout", onMouseOut);
             $(svgMainImg).on("click", onClick);
 
-            //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
             $(svgDelImg).on("click", function (e) {
 
                 e.stopPropagation();
 
-                var indx = $(e.target).attr("data-indx").valueOf();
+                if (selectedItem != null) {
 
-                itemToDelete = modelItems[indx];
+                    $.ajax({
+                        url: basePath + "api/ModelItem/Delete/",
+                        type: 'DELETE',
+                        dataType: 'json',
+                        data: selectedItem.getData(),
+                        success: function () {
 
-                $.ajax({
-                    url: basePath + "api/image/Delete/",
-                    type: 'DELETE',
-                    dataType: 'json',
-                    data: itemToDelete.getData(),
-                    success: function (data) {
-                        $("#img-group" + itemToDelete.id).remove();
-                        modelItems[indx] = null;
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        console.log('Error in Operation');
-                    }
-                });
+                            $("#img-group" + selectedItem.id).remove();
+
+                            modelItems.splice($.inArray(selectedItem, modelItems), 1);
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            errorMessage.show("The server encountered an error. Detailed description: " + errorThrown);
+                        }
+                    });
+                }
             })
 
             modelItems.push(modelItem);
@@ -691,7 +687,7 @@
 
             if (selectedItem != null) {
 
-                selectedItem.deselect(); //XXXXXX ???????????
+                selectedItem.deselect(); //ToDo ???????????
                 selectedItem = null;
             }
         }
@@ -737,7 +733,8 @@
 
             $("#img" + id).attr({ "x": elementStart.x + svgPoint.x, 'y': elementStart.y + svgPoint.y });
             $("#rect" + id).attr({"x": elementStart.x + svgPoint.x, 'y': elementStart.y + svgPoint.y});
-            $("#del" + id).attr({"x": elementStart.x + svgPoint.x + parseInt($("#img" + id).attr("width")) - 16, 'y': elementStart.y + svgPoint.y});
+            $("#del" + id).attr({"x": elementStart.x + svgPoint.x + parseInt($("#img" + id).attr("width")), 'y': elementStart.y + svgPoint.y - 16});
+            //$("#del" + id).attr({ "x": elementStart.x + svgPoint.x + parseInt($("#img" + id).attr("width")) - 16, 'y': elementStart.y + svgPoint.y });
 
             if (selectedItem != null) {
 
@@ -764,12 +761,18 @@
 
         function onMouseOver(e) {
 
-            $("#del" + e.target.id.substring(3)).show();
+            //e.stopPropagation();
+            //e.preventDefault();
+
+            //$("#del" + e.target.id.substring(3)).show();
         }
 
         function onMouseOut(e) {
 
-            $("#del" + e.target.id.substring(3)).hide();
+            //e.stopPropagation();
+            //e.preventDefault();
+
+            //$("#del" + e.target.id.substring(3)).hide();
         }
 
         function onClick(e) {
@@ -778,7 +781,7 @@
             e.preventDefault();
         }
 
-        //XXXX Delete
+        //ToDo Delete
         function disableAllItems() {
 
             $("#sample-text").prop('disabled', true);
@@ -791,7 +794,7 @@
             $("#font-size").prop('disabled', true);
         }
 
-        //XXXX Delete
+        //ToDo Delete
         function enableAllItems() {
 
             $("#sample-text").prop('disabled', false);
@@ -889,7 +892,7 @@
                     dataType: "json",
                     data: "templateId=" + id,
 
-                    success: function (data, textStatus, xhr) {
+                    success: function (data) {
                         $("#select-image").remove();
                         $("#image-worker").show();
 
@@ -897,7 +900,7 @@
                     },
 
                     error: function (xhr, textStatus, errorThrown) {
-                        console.log('Error in Operation');
+                        errorMessage.show("The server encountered an error. Detailed description: " + errorThrown);
                     }
                 });
             });
@@ -925,21 +928,18 @@
                 type: "GET",
                 url: basePath + "api/Sample/List/",
                 dataType: 'json',
-                data: "samplePageIndex=" + samplePageIndex, //XXXX
+                data: "samplePageIndex=" + samplePageIndex, //ToDo
 
                 success: function (sampleIds) {
 
                     sampleIds.forEach(function (item, i) {
                         $("#sample" + i).attr("src", basePath + "api/Sample/Thumbnail/" + item + "/");
-                        $("#sample" + i).attr("data-id", item); //xxxx
+                        $("#sample" + i).attr("data-id", item); //ToDo
                     })
                 },
 
                 error: function (xhr, textStatus, errorThrown) {
-
-                    errorMessage.show(xhr + " " + textStatus + " " + errorThrown);
-
-                    console.log('Error in Operation');
+                    errorMessage.show("The server encountered an error. Detailed description: " + errorThrown);
                 }
             });
         }
@@ -979,8 +979,8 @@
                 },
 
                 error: function (xhr, textStatus, errorThrown) {
-                    console.log('Error in Operation');
-            }
+                    errorMessage.show("The server encountered an error. Detailed description: " + errorThrown);
+                }
             });
         }
 
@@ -1031,15 +1031,6 @@
         model.init();
         sampleSelector.init(model);
         fileUpload.init(model);
- 
-        // For Testing
-        $("#save").click(function () {
-            errorMessage.show();
-        });
-
-        $("#test").click(function () {
-            alert(argbToRGB(-65281));
-        });
     };
 
     return {

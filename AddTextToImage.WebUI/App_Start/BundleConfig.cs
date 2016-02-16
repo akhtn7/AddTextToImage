@@ -4,6 +4,9 @@ using System.Web.Optimization;
 
 namespace AddTextToImage.WebUI
 {
+    /// <summary>
+    /// This class registers script and style bundles.
+    /// </summary>
     public class BundleConfig
     {
         public static void RegisterBundles(BundleCollection bundles)

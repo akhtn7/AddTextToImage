@@ -28,6 +28,9 @@ namespace AddTextToImage.ImageGenerator
 
         private float fDestHeight = 0.0f;
 
+        ///<summary>
+        /// Creates a new instance of the OutlineTextProcessor class.
+        ///</summary>
         public OutlineTextProcessor(ModelItem modelItemParam, TemplateBase templateParam, string fontPathParam)
         {
             modelItem = modelItemParam;
@@ -306,7 +309,7 @@ namespace AddTextToImage.ImageGenerator
             return image;
         }
 
-        //XXXX Delete
+        //ToDo - Delete
         private Bitmap TextOutlineX()
         {
             PngOutlineText outlineText = new PngOutlineText();

@@ -19,13 +19,18 @@ namespace AddTextToImage.WebUI.Controllers
         private readonly IRepository<Model> _modelRepository;
         private readonly IRepository<Sample> _sampleRepository;
 
+        ///<summary>
+        /// Creates a new instance of the ModelController class.
+        ///</summary>
         public ModelController(IRepository<Model> modelRepository, IRepository<Sample> sampleRepository)
         {
             _modelRepository = modelRepository;
             _sampleRepository = sampleRepository;
         }
 
-
+        ///<summary>
+        ///Uploads file and creates new Model.
+        ///</summary>
         [HttpPost]
         public Model UploadFile()
         {
@@ -49,17 +54,17 @@ namespace AddTextToImage.WebUI.Controllers
 
                     _modelRepository.Add(model);
                     _modelRepository.Save();
-
-                    //return model;
-                    //Session.SetDataToSession<int>("ModelId", model.ModelId); 
                 }
-
             }
 
             return model;
         }
 
-
+        ///<summary>
+        ///Creates new Model based on selected Sample.
+        ///</summary>
+        /// <param name="id">Unique identifier of Sample item.</param>
+        /// <returns>Return Model object</returns>
         [HttpPut]
         public Model CreateFromSample(int id)
         {
@@ -104,6 +109,8 @@ namespace AddTextToImage.WebUI.Controllers
         [HttpPut]
         public int AddModelItem(ModelItem modelItem)
         {
+            //ToDo ModelState.IsValid
+
             var model = _modelRepository.Get(modelItem.ModelId);
 
             if (model != null)
@@ -112,43 +119,26 @@ namespace AddTextToImage.WebUI.Controllers
                 _modelRepository.Save();
             }
 
+            //ToDo - if model == null ?????
             return modelItem.Id;
         }
 
-
+        ///<summary>
+        ///Returns image for Model item.
+        ///</summary>
         [HttpGet]
         public HttpResponseMessage Image(int id)
         {
             var image = _modelRepository.Get(id);
-            if (image != null)
-            {
-                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
 
-                response.Content = new ByteArrayContent(image.Image);
-                response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
-                return response;
+            if (image == null)
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
 
-            }
-            else
-                return null;
-            //XXXXXXXXXXXXXXX
-            /*else
-            {
-                using (MemoryStream memoryStream = new MemoryStream())
-                {
-                    Bitmap imageNotFound = Utils.GetFontedImage("Not Found", "Brewsky.ttf", 31, "#FF00FF", 0);
-                    imageNotFound.Save(memoryStream, ImageFormat.Png);
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
 
-                    HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
-
-                    response.Content = new ByteArrayContent(memoryStream.ToArray());
-                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
-                    return response;
-                }
-            }*/
+            response.Content = new ByteArrayContent(image.Image);
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+            return response;
         }
-
-
-      
     }
 }

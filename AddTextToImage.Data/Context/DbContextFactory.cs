@@ -10,6 +10,10 @@ namespace AddTextToImage.Data.Context
     public class DbContextFactory : IDbContextFactory
     {
         private readonly DbContext dbContext;
+
+        ///<summary>
+        /// Creates a new instance of the DbContextFactory class.
+        ///</summary>
         public DbContextFactory()
         {
             dbContext = new Db();

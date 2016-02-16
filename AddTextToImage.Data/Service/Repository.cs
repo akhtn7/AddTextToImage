@@ -11,10 +11,16 @@ using System.Threading.Tasks;
 
 namespace AddTextToImage.Data.Service
 {
+    ///<summary>
+    /// Provides a basic implementation of the IRepository contract.
+    ///</summary>
     public class Repository<T> : IRepository<T> where T : Entity, new()
     {
         protected readonly DbContext dbContext;
 
+        ///<summary>
+        /// Creates a new instance of the Repository class.
+        ///</summary>
         public Repository(IDbContextFactory factory)
         {
             dbContext = factory.GetContext();

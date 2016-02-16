@@ -7,6 +7,9 @@ using System.Web.Routing;
 
 namespace AddTextToImage.WebUI
 {
+    /// <summary>
+    /// This class registers routes.
+    /// </summary>
     public class RouteConfig
     {
         public static void RegisterRoutes(RouteCollection routes)

@@ -8,10 +8,16 @@ using System.Web.Http;
 
 namespace AddTextToImage.WebUI.Controllers
 {
+    ///<summary>
+    ///This api controller provides method which returns an image of ClipartTemplate item.
+    ///</summary>
     public class TextTemplateController : ApiController
     {
         private readonly IRepository<TextTemplate> _textTemplateRepository;
 
+        ///<summary>
+        /// Creates a new instance of the TextTemplateController class.
+        ///</summary>
         public TextTemplateController(IRepository<TextTemplate> textTemplateRepository)
         {
             _textTemplateRepository = textTemplateRepository;
@@ -19,26 +25,24 @@ namespace AddTextToImage.WebUI.Controllers
 
 
         /// <summary>
-        /// Return an image for 
+        /// Returns an image for TextTemplate item.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Unique identifier of TextTemplate item.</param>
         /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage Image(int id)
         {
             var textTemplate = _textTemplateRepository.Get(id);
 
-            if (textTemplate != null)
-            {
-                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+            if (textTemplate == null)
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
 
-                response.Content = new ByteArrayContent(textTemplate.Image);
-                response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
 
-                return response;
-            }
-            else
-                return null;
+            response.Content = new ByteArrayContent(textTemplate.Image);
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+
+            return response;
         }
     }
 }

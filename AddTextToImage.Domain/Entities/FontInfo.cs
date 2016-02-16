@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AddTextToImage.Domain.Entities
 {
+
     public class FontInfo : Entity
     {
         [Required]

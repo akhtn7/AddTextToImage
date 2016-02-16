@@ -14,6 +14,9 @@ namespace AddTextToImage.WebUI.Controllers
     {
         private readonly IRepository<ModelItem> _modelItemRepository;
 
+        ///<summary>
+        /// Creates a new instance of the ModelItemController class.
+        ///</summary>
         public ModelItemController(IRepository<ModelItem> modelItemRepository)
         {
             _modelItemRepository = modelItemRepository;
@@ -24,6 +27,7 @@ namespace AddTextToImage.WebUI.Controllers
         public void Update(ModelItem modelItem)
         {
             var mi = _modelItemRepository.Get(modelItem.Id);
+
             if (mi != null)
             {
                 mi.PositionLeft = modelItem.PositionLeft;

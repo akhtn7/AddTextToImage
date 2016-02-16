@@ -138,6 +138,41 @@
                         <option>215</option>
                         <option>220</option>
                         <option>225</option>
+                        <option>230</option>
+                        <option>235</option>
+                        <option>240</option>
+                        <option>245</option>
+                        <option>250</option>
+                        <option>255</option>
+                        <option>260</option>
+                        <option>265</option>
+                        <option>270</option>
+                        <option>275</option>
+                        <option>280</option>
+                        <option>285</option>
+                        <option>290</option>
+                        <option>295</option>
+                        <option>300</option>
+                        <option>305</option>
+                        <option>310</option>
+                        <option>315</option>
+                        <option>320</option>
+                        <option>325</option>
+                        <option>330</option>
+                        <option>335</option>
+                        <option>340</option>
+                        <option>345</option>
+                        <option>350</option>
+                        <option>355</option>
+                        <option>360</option>
+                        <option>365</option>
+                        <option>370</option>
+                        <option>375</option>
+                        <option>380</option>
+                        <option>385</option>
+                        <option>390</option>
+                        <option>395</option>
+                        <option>400</option>
                     </select>
                 </div>
             </div>
@@ -237,15 +272,17 @@
                     <label for="btn-template-clipart">Cliparts:</label>
                 </div>
                 <div class="settings-right">
-                    <input type="button" id="btn-template-clipart" name="btn-template-clipart" class="btn settings-ctl" value="Add" />
+                    <input type="button" id="btn-template-clipart" name="btn-template-clipart" class="btn settings-ctl" value="Add Clipart" />
                 </div>
             </div>
             <div>
                 <div class="settings-left">
-                    <label>Export:</label>
+                    <label for="btn-save-result">Export:</label>
                 </div>
                 <div class="settings-right">
-                    <a href="/api/Image/Result/" id="save-result" class="btn">Save</a>
+                    <form id="form-save-result" method="get" action="/api/Image/Result/">
+                        <input type="submit" id="btn-save-result" name="btn-save-result" class="btn settings-ctl" value="Save..." />
+                    </form>
                 </div>
             </div>
         </div>
@@ -257,13 +294,6 @@
     </div>
 </div>
 
-
-<div>Test Buttons
-    <br/>
-    <input type="button" id="save" name="save" value="Save" />
-
-    <input type="button" id="test" name="test" value="Test" />
-</div>
 
 <div style="display:none">
     <div id="hidden-images">
