@@ -17,6 +17,8 @@ namespace AddTextToImage.WebUI.Controllers
         private readonly IRepository<TextGallery> _textGalleryRepository;
         private readonly IRepository<ClipartGallery> _clipartGalleryRepository;
 
+        private readonly int itemsOnPage = 8;
+
         ///<summary>
         /// Creates a new instance of the HomeController class.
         ///</summary>
@@ -53,10 +55,12 @@ namespace AddTextToImage.WebUI.Controllers
             // Populate drop down lists with clipart gallery names
             viewModel.ClipartGalleryList = _clipartGalleryRepository.GetAll().Select(g => new SelectListItem { Text = g.Name, Value = g.Id.ToString() }).ToList<SelectListItem>();
 
-            viewModel.SampleIds = _sampleRepository.GetAll().OrderBy(p => p.Id).Take(8).Select(p => p.Id).ToArray<int>();
+            viewModel.SampleIds = _sampleRepository.GetAll().OrderBy(p => p.Id).Take(itemsOnPage).Select(p => p.Id).ToArray<int>();
 
-            //ToDo If total samples does not div on 8
-            viewModel.SampleTotalPage = (_sampleRepository.GetAll().Count() / 8) - 1;
+            //ToDo If total samples does not divide on itemsOnPage
+            viewModel.SampleTotalPage = (_sampleRepository.GetAll().Count() / itemsOnPage) - 1 + ((_sampleRepository.GetAll().Count() % itemsOnPage) > 0 ? 1 : 0);
+
+            
 
             return View(viewModel);
         }

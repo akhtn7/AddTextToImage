@@ -26,46 +26,10 @@ namespace AddTextToImage.Data.Service
             dbContext = factory.GetContext();
         }
 
-        //XXXX ??? 
-        public void SetStateModified(T o)
-        {
-            dbContext.Entry(o).State = System.Data.Entity.EntityState.Modified;
-        }
-
-        public void SetStateUnchanged(T o)
-        {
-            dbContext.Entry(o).State = System.Data.Entity.EntityState.Unchanged;
-        }
-
-
-        public void Save()
-        {
-            dbContext.SaveChanges();
-        }
-        
-        public T Add(T o)
-        {
-            dbContext.Set<T>().Add(o);
-            return o;
-        }
-       
-        public virtual void Delete(T o)
-        {
-            dbContext.Set<T>().Remove(o);
-
-            dbContext.Entry(o).State = EntityState.Deleted;
-        }
-
         public T Get(int id)
         {
             var entity = dbContext.Set<T>().Find(id);
             return entity;
-        }
-
-        
-        public virtual IQueryable<T> Where(Expression<Func<T, bool>> predicate)
-        {
-            return dbContext.Set<T>().Where(predicate);
         }
 
         public virtual IQueryable<T> GetAll()
@@ -82,6 +46,39 @@ namespace AddTextToImage.Data.Service
         {
             return dbContext.Set<T>().Include(include1).Include(include2);
         }
-    
+
+        public virtual IQueryable<T> Where(Expression<Func<T, bool>> predicate)
+        {
+            return dbContext.Set<T>().Where(predicate);
+        }
+
+        public T Add(T o)
+        {
+            dbContext.Set<T>().Add(o);
+            return o;
+        }
+
+        public virtual void Delete(T o)
+        {
+            dbContext.Set<T>().Remove(o);
+
+            dbContext.Entry(o).State = EntityState.Deleted;
+        }
+
+        //ToDo Do we need this method?
+        public void SetStateModified(T o)
+        {
+            dbContext.Entry(o).State = System.Data.Entity.EntityState.Modified;
+        }
+
+        public void SetStateUnchanged(T o)
+        {
+            dbContext.Entry(o).State = System.Data.Entity.EntityState.Unchanged;
+        }
+
+        public void Save()
+        {
+            dbContext.SaveChanges();
+        }
     }
 }

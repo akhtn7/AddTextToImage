@@ -15,7 +15,7 @@ namespace AddTextToImage.WebUI
                         "~/Scripts/spectrum.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
-                        "~/Scripts/add-text-to-image.js"));
+                        "~/Scripts/app.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/spectrum.css",

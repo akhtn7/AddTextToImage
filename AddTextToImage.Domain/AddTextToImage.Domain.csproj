@@ -59,10 +59,10 @@
     <Compile Include="Entities\TextGallery.cs" />
     <Compile Include="Entities\TextTemplate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\IRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="CodeMap\CodeMap.dgml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

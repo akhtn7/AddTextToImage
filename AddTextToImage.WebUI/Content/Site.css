@@ -111,6 +111,8 @@ h1{
 
 .disable{
     background-color: #458dcd;
+    color: #989595;
+    cursor: default;
 }
 
 .settings-left {
@@ -259,17 +261,16 @@ position: absolute;
 
 
 .settings {
-    /*float: left;*/
     display: inline-block;
     text-align: left;
-    border: 1px solid #2e6da4;
-    background: #F2F2F2 none repeat scroll 0% 0%;
+    border: 1px solid #85B6E0;
+    background: #C8E0C2 none repeat scroll 0% 0%;
     height: 100%;
     border-radius: 3px;
 }
 
 .settings > div {
-    padding: 6px;
+    padding: 10px;
 }
 
 #image-main {
@@ -296,7 +297,6 @@ position: absolute;
 
     #image-main {
         width: 67%;
-        /*height: 450px;*/
     }
 }
 
@@ -314,7 +314,7 @@ position: absolute;
     margin-top: 1em;
 }
 
-.sample-item {
+.sample > div {
     border: 1px solid #ccc;
     padding: 2px;
     margin: 2px;
@@ -326,10 +326,10 @@ position: absolute;
     -o-transition: opacity .25s ease-in-out;
 }
 
-    .sample-item:hover {
-        cursor: pointer;
-        opacity: 0.5;
-    }
+.sample-item:hover {
+    cursor: pointer;
+    opacity: 0.5;
+}
 
 .sample-item-img {
     display: block;

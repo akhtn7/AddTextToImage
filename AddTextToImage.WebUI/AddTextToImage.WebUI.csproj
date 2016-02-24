@@ -138,6 +138,7 @@
   <ItemGroup>
     <Content Include="Content\Images\delete.png" />
     <Content Include="Content\Images\demo.png" />
+    <Content Include="Content\Images\empty-sample.png" />
     <Content Include="Content\Images\header_bgr.png" />
     <Content Include="Content\Images\file-placeholder.png" />
     <Content Include="Content\Images\logo.png" />
@@ -271,9 +272,10 @@
     <Content Include="fonts\angelsbears.ttf" />
     <Content Include="fonts\Smiles.ttf" />
     <Content Include="fonts\ggsloveme.ttf" />
+    <Content Include="fonts\SIMPLIFICA Typeface.ttf" />
     <None Include="Properties\PublishProfiles\addtexttoimage.somee.com.pubxml" />
     <None Include="Properties\PublishProfiles\LocalHost.pubxml" />
-    <Content Include="Scripts\add-text-to-image.js" />
+    <Content Include="Scripts\app.js" />
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.0.js" />
     <Content Include="Scripts\jquery-2.2.0.min.js" />

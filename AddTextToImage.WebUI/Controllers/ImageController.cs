@@ -135,7 +135,7 @@ namespace AddTextToImage.WebUI.Controllers
                 response.Content = new ByteArrayContent(memoryStream.ToArray());
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png"); //ToDo jpg
                 response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-                response.Content.Headers.ContentDisposition.FileName = "avatar.png";
+                response.Content.Headers.ContentDisposition.FileName = "result.png";
             }
 
             graphics.Flush();

@@ -33,6 +33,7 @@
             <div>
                 <div>
                     @{int i = 0;
+                    
                     foreach (var id in Model.SampleIds)
                     {
                         string sampleId = "sample" + i.ToString();
@@ -44,8 +45,22 @@
                         if (i == 3)
                         {
                             @:</div><div>
-                    }
+                        }
                         i++;
+                    }
+                    
+                    for (int j = i; j < 8; j++)
+                    {
+                        string sampleId = "sample" + j.ToString();
+                        <div class="sample">
+                            <div class="sample-item">
+                                <img id="@sampleId" data-id="0" class="sample-item-img" src="~/Content/Images/empty-sample.png" />
+                            </div>
+                        </div>
+                        if (j == 3)
+                        {
+                            @:</div><div>
+                        }
                     }
                     }
                 </div>
@@ -77,7 +92,7 @@
                 <div class="settings-left">
                 </div>
                 <div class="settings-right">
-                    <input id="btn-add-text" type="button" class="btn settings-ctl" value="Add text" />
+                    <input id="btn-add-text" type="button" class="btn settings-ctl" value="Add Text" />
                 </div>
             </div>
             <div>
