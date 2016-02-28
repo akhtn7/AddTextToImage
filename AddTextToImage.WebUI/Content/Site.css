@@ -1,16 +1,21 @@
 ﻿body {
     font-family:  Arial,Helvetica,sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     text-align: center;
 }
 a {
     text-decoration: none;
 }
 h1{
-    font-size: 20px;
+    font-size: 14px;
     color: #B1B1B1;
 }
-
+h1 a{
+    color: #B1B1B1;
+}
+input[type="text"], select {
+     font-size: 16px;
+}
 #error-message-holder{
     height: 20px;
     padding: 2px;
@@ -31,14 +36,12 @@ h1{
     margin-right: 10px;
 }
 .logo{
-    width: 300px;
-    height: 60px;
-    display: inline-block;
-    float: left;
+    max-width: 300px;
+    width: 100%;
 }
-.title{
-    display: inline-block;
-    padding-top: 6px;
+.logo img{
+    max-width: 300px;
+    width: 100%;
 }
 
 
@@ -73,24 +76,16 @@ h1{
 }
 
 
-
 #fileUpload {
     position: absolute;
     top: 0;
     right: 0;
     margin: 0;
     padding: 0;
-    font-size: 20px;
     cursor: pointer;
     opacity: 0;
     filter: alpha(opacity=0);
 }
-
-/*
-.delete-sign {
-    cursor: pointer;
-}
-*/
 
 
 .btn {
@@ -103,7 +98,7 @@ h1{
     overflow: hidden;
     padding: 6px 12px;
     position: relative;
-    font-size: 13px;
+    font-size: 16px;
 }
 .btn:hover {
     background-color: #458dcd;
@@ -117,19 +112,20 @@ h1{
 
 .settings-left {
     min-width: 80px;
-    width: 39%;
+    width: 31%;
     display: inline-block;
     vertical-align: top;
 }
 
+/*
 .settings-left-text {
     width: 78%;
     display: inline-block;
 }
-
+*/
 .settings-right {
     display: inline-block;
-    width: 59%;
+    width: 66%;
 }
 
 .settings-right-add {
@@ -247,18 +243,6 @@ position: absolute;
     padding-right: 15px;
 }
 
-@media (min-width: 768px) {
-    .container {
-        width: 750px;
-    }
-}
-
-@media (min-width: 992px) {
-    .container {
-        width: 970px;
-    }
-}
-
 
 .settings {
     display: inline-block;
@@ -278,40 +262,17 @@ position: absolute;
     vertical-align: top;
 }
 
-@media (min-width: 479px) and (max-width: 767px) {
-    .settings {
-        width: 42%;
-        margin-right: 2%;
-    }
-
-    #image-main {
-        width: 55%;
-    }
-}
-
-@media (min-width: 768px) {
-    .settings {
-        width: 30%;
-        margin-right: 2%;
-    }
-
-    #image-main {
-        width: 67%;
-    }
-}
-
-
 
 #samples-holder {
     border: 1px solid #ccc;
     text-align: center;
+    padding-bottom: 10px;
 }
 
 .select-picture-gallery {
     color: #c5c5c5;
     font-size: 20px;
-    margin-bottom: 1em;
-    margin-top: 1em;
+    margin: 10px;
 }
 
 .sample > div {
@@ -332,51 +293,21 @@ position: absolute;
 }
 
 .sample-item-img {
-    display: block;
     height: auto;
     max-width: 100%;
 }
 
-@media (max-width: 767px) {
-    .sample {
-        width: 49%;
-        display: inline-block;
-    }
-}
-
-@media (min-width: 768px) {
-    .sample {
-        width: 24%;
-        display: inline-block;
-    }
-
-    #select-image {
-    }
-}
-
-
-
-@media (min-width: 992px) {
-}
-
-
-
-@media (min-width: 1200px) {
-}
-
 
 .footer{
-    min-height: 20px;
+    min-height: 22px;
     background: #F2F2F2 none repeat scroll 0% 0%;
     margin: 30px 0px 30px 0px;
 }
 .footer a{
-    font-size: 13px;
     color: #818181;
 }
 .footer div{
     padding:3px;
-    font-size: 13px;
     color: #A1A1A1;
 }
 
@@ -397,7 +328,7 @@ position: absolute;
     position: relative;
     height: 32px;
     font-family: Arial,Helvetica,sans-serif;
-    font-size: 13px;
+    font-size: 16px;
     padding: 0px 10px 0px 10px;
 }
 .xui-dialog .ui-button:hover {
@@ -405,4 +336,90 @@ position: absolute;
 }
 .xui-dialog .ui-dialog-titlebar-close {
   display: none;
+}
+
+@media (max-width: 480px) {
+    #image-main {
+       width: 100%;
+       margin-top: 20px;
+    }
+    .settings {
+        width: 100%;
+        margin: 0px;
+    }
+}
+
+@media (min-width: 481px) {
+    .sample {
+        width: 49%;
+        display: inline-block;
+    }
+
+    #image-main {
+       width: 100%;
+       margin-top: 20px;
+    }
+    .settings {
+        width: 100%;
+        margin: 0px;
+    }
+}
+
+@media (min-width: 600px) {
+    .sample {
+        width: 49%;
+        display: inline-block;
+    }
+
+    #image-main {
+        width: 53%;
+        margin: 0px;
+    }
+
+    .settings {
+        width: 42%;
+        margin-right: 2%;
+    }
+}
+
+@media (min-width: 800px) {
+    .container {
+        width: 740px;
+    }
+
+    .logo{
+        float: left;
+    }
+
+    .title {
+        padding-top: 1px;
+    }
+
+    h1{
+        font-size: 20px;
+        color: #B1B1B1;
+    }
+    .sample {
+        width: 24%;
+        display: inline-block;
+    }
+
+    #image-main {
+        width: 67%;
+        margin: 0px;
+    }
+
+    .settings {
+        width: 30%;
+        margin-right: 2%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        width: 970px;
+    }
+    #image-main {
+        margin: 0px;
+    }
 }

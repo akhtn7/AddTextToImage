@@ -12,6 +12,8 @@ namespace AddTextToImage.WebUI.Controllers
     {
         private readonly IRepository<Sample> _sampleRepository;
 
+        private readonly int PageSize = 8;
+
         ///<summary>
         /// Creates a new instance of the SampleController class.
         ///</summary>
@@ -27,13 +29,7 @@ namespace AddTextToImage.WebUI.Controllers
         [HttpGet]
         public IEnumerable<int> List(int samplePageIndex)
         {
-            int[] result =
-               (from s in _sampleRepository.GetAll()
-                orderby s.Id
-                select s.Id)
-                .Skip(samplePageIndex * 8)
-                .Take(8)
-                .ToArray<int>();
+            int[] result = _sampleRepository.GetAll().OrderBy(p => p.Id).Skip(samplePageIndex * PageSize).Take(PageSize).Select(p => p.Id).ToArray<int>();
 
             return result;
         }

@@ -100,6 +100,7 @@ namespace AddTextToImage.ImageGenerator
 
             Bitmap image = new Bitmap((int)(fStartX + fDestWidth), (int)(fStartY + fDestHeight));
 
+            // FromImage method creates a new Graphics from the specified Image.
             Graphics graphics = Graphics.FromImage(image);
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
             graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -138,6 +139,7 @@ namespace AddTextToImage.ImageGenerator
 
             Bitmap image = new Bitmap((int)(fStartX + fDestWidth), (int)(fStartY + fDestHeight));
 
+            // FromImage method creates a new Graphics from the specified Image.
             Graphics graphics = Graphics.FromImage(image);
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
             graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -176,6 +178,7 @@ namespace AddTextToImage.ImageGenerator
 
             Bitmap image = new Bitmap((int)(fStartX + fDestWidth), (int)(fStartY + fDestHeight));
 
+            // FromImage method creates a new Graphics from the specified Image.
             Graphics graphics = Graphics.FromImage(image);
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
             graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -214,6 +217,7 @@ namespace AddTextToImage.ImageGenerator
 
             Bitmap image = new Bitmap((int)(fStartX + fDestWidth), (int)(fStartY + fDestHeight));
 
+            // FromImage method creates a new Graphics from the specified Image.
             Graphics graphics = Graphics.FromImage(image);
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
             graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -252,6 +256,7 @@ namespace AddTextToImage.ImageGenerator
 
             Bitmap image = new Bitmap((int)(fStartX + fDestWidth), (int)(fStartY + fDestHeight));
 
+            // FromImage method creates a new Graphics from the specified Image.
             Graphics graphics = Graphics.FromImage(image);
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
             graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -290,6 +295,7 @@ namespace AddTextToImage.ImageGenerator
 
             Bitmap image = new Bitmap((int)(fStartX + fDestWidth), (int)(fStartY + fDestHeight));
 
+            // FromImage method creates a new Graphics from the specified Image.
             Graphics graphics = Graphics.FromImage(image);
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
             graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -309,50 +315,7 @@ namespace AddTextToImage.ImageGenerator
             return image;
         }
 
-        //ToDo - Delete
-        private Bitmap TextOutlineX()
-        {
-            PngOutlineText outlineText = new PngOutlineText();
-
-            outlineText.TextOutline(ColorTranslator.FromHtml(modelItem.FontColor), Color.FromArgb(template.OutlineColor1), template.OutlineThickness1);
-            outlineText.EnableReflection(false);
-
-            outlineText.EnableShadow(template.ShadowEnable);
-
-            if (template.ShadowEnable)
-                outlineText.Shadow(Color.FromArgb(template.ShadowColor), template.ShadowThickness, new Point(template.ShadowOffsetX, template.ShadowOffsetY));
-
-            Graphics g = Graphics.FromImage(new Bitmap(1, 1));
-
-            outlineText.MeasureString(g, fontFamily, FontStyle.Regular, modelItem.FontSize, modelItem.Text,
-                new Point(0, 0), new StringFormat(), ref fStartX, ref fStartY, ref fDestWidth, ref fDestHeight);
-
-            fDestHeight++;
-
-            Bitmap image = new Bitmap((int)(fStartX + fDestWidth), (int)(fStartY + fDestHeight), System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            outlineText.SetPngImage(image);
-
-            Graphics graphics = Graphics.FromImage(image);
-            graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
-            LinearGradientBrush gradientBrush = new LinearGradientBrush(new RectangleF(fStartX, fStartY, fDestWidth - (fStartX - 10), fDestHeight - (fStartY - 10)),
-                   ColorTranslator.FromHtml(modelItem.FontColor), Color.FromArgb(template.TextColor2), LinearGradientMode.Vertical);
-
-            if (template.TextGradientEnable)
-                outlineText.TextOutline(gradientBrush, Color.FromArgb(template.OutlineColor1), template.OutlineThickness1);
-
-            outlineText.DrawString(graphics, fontFamily, FontStyle.Regular, modelItem.FontSize, modelItem.Text, new Point(0, 0), new StringFormat());
-
-            gradientBrush.Dispose();
-            graphics.Dispose();
-            g.Dispose();
-
-            return image;
-        }
-
-
-
+ 
         // Return a bitmap rotated around its center.
         private Bitmap RotateBitmap(Bitmap bm, float angle)
         {

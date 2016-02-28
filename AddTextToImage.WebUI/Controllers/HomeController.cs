@@ -17,7 +17,7 @@ namespace AddTextToImage.WebUI.Controllers
         private readonly IRepository<TextGallery> _textGalleryRepository;
         private readonly IRepository<ClipartGallery> _clipartGalleryRepository;
 
-        private readonly int itemsOnPage = 8;
+        private readonly int PageSize = 8;
 
         ///<summary>
         /// Creates a new instance of the HomeController class.
@@ -35,8 +35,8 @@ namespace AddTextToImage.WebUI.Controllers
 
             var textGalleryList = _textGalleryRepository.GetAllWithInclude("Items");
 
+            // Get attributes of the first item in text template gallery
             var textGallery = textGalleryList.FirstOrDefault();
-
             if (textGallery != null)
             {
                 viewModel.SelectedTextGalleryId = textGallery.Id;
@@ -49,18 +49,16 @@ namespace AddTextToImage.WebUI.Controllers
                 }
             }
 
-            // Populate drop down lists with text gallery names
+            // Populate drop down lists with text template gallery names
             viewModel.TextGalleryList = textGalleryList.Select(g => new SelectListItem { Text = g.Name, Value = g.Id.ToString()}).ToList<SelectListItem>();
 
             // Populate drop down lists with clipart gallery names
             viewModel.ClipartGalleryList = _clipartGalleryRepository.GetAll().Select(g => new SelectListItem { Text = g.Name, Value = g.Id.ToString() }).ToList<SelectListItem>();
 
-            viewModel.SampleIds = _sampleRepository.GetAll().OrderBy(p => p.Id).Take(itemsOnPage).Select(p => p.Id).ToArray<int>();
+            viewModel.SampleIds = _sampleRepository.GetAll().OrderBy(p => p.Id).Take(PageSize).Select(p => p.Id).ToArray<int>();
 
-            //ToDo If total samples does not divide on itemsOnPage
-            viewModel.SampleTotalPage = (_sampleRepository.GetAll().Count() / itemsOnPage) - 1 + ((_sampleRepository.GetAll().Count() % itemsOnPage) > 0 ? 1 : 0);
-
-            
+            // Calculate max page number for clipart gallery
+            viewModel.SampleTotalPage = (_sampleRepository.GetAll().Count() / PageSize) - 1 + ((_sampleRepository.GetAll().Count() % PageSize) > 0 ? 1 : 0);
 
             return View(viewModel);
         }

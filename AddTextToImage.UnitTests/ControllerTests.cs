@@ -10,6 +10,7 @@ using System.Net.Http;
 using AddTextToImage.Data.Service;
 using AddTextToImage.Data.Context;
 using System.Collections.Generic;
+using System.Net;
 
 
 namespace AddTextToImage.UnitTests
@@ -67,7 +68,8 @@ namespace AddTextToImage.UnitTests
             HttpResponseMessage result = target.Image(100);
 
             // Assert
-            Assert.IsNull(result);
+            Assert.IsInstanceOfType(result, typeof(HttpResponseMessage));
+            Assert.AreEqual(result.StatusCode, HttpStatusCode.BadRequest);
         }
 
 
@@ -95,6 +97,7 @@ namespace AddTextToImage.UnitTests
             // Assert
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(HttpResponseMessage));
+            Assert.AreEqual(result.StatusCode, HttpStatusCode.OK);
             Assert.AreEqual(result.Content.Headers.ContentType.MediaType, "image/png");
         }
 
@@ -121,7 +124,8 @@ namespace AddTextToImage.UnitTests
             HttpResponseMessage result = target.Image(100);
 
             // Assert
-            Assert.IsNull(result);
+            Assert.IsInstanceOfType(result, typeof(HttpResponseMessage));
+            Assert.AreEqual(result.StatusCode, HttpStatusCode.BadRequest);
         }
 
 
@@ -173,7 +177,8 @@ namespace AddTextToImage.UnitTests
             HttpResponseMessage result = target.Thumbnail(100);
 
             // Assert
-            Assert.IsNull(result);
+            Assert.IsInstanceOfType(result, typeof(HttpResponseMessage));
+            Assert.AreEqual(result.StatusCode, HttpStatusCode.BadRequest);
         }
 
 

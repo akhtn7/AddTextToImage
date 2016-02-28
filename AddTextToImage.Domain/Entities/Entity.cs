@@ -14,7 +14,6 @@ namespace AddTextToImage.Domain.Entities
     ///</summary>
     public abstract class Entity
     {
-        //[JsonProperty(PropertyName = "ModelId")]
          [Key]
         public int Id { get; set; }
 

@@ -28,7 +28,7 @@ namespace AddTextToImage.WebUI.Controllers
         /// Returns an image for TextTemplate item.
         /// </summary>
         /// <param name="id">Unique identifier of TextTemplate item.</param>
-        /// <returns></returns>
+        /// <returns>Return an image generated from the text</returns>
         [HttpGet]
         public HttpResponseMessage Image(int id)
         {

@@ -25,14 +25,11 @@ namespace AddTextToImage.WebUI.Controllers
         }
 
 
-        // Передается все информация
+        // ToDo - all data are sent
         [HttpGet]
         public List<TextGallery> List()
         {
-            List<TextGallery> templateGalleryList =
-                (from tg in _textGalleryRepository.GetAllWithInclude("Items")
-                 select tg)
-                 .ToList<TextGallery>();
+            List<TextGallery> templateGalleryList = _textGalleryRepository.GetAllWithInclude("Items").ToList<TextGallery>();
 
             return templateGalleryList;
         }

@@ -41,19 +41,11 @@ namespace AddTextToImage.WebUI.Controllers
 
             if (modelItem.ItemType == 0)
             {
-                template = 
-                   (from t in _textTemplateRepository.GetAllWithInclude("Font")
-                    where t.Id == modelItem.TemplateId
-                    select t)
-                    .FirstOrDefault();
+                template = _textTemplateRepository.GetAllWithInclude("Font").Where(p => p.Id == modelItem.TemplateId).FirstOrDefault();
             }
             else
             {
-                template = 
-                   (from t in _clipartTemplateRepository.GetAllWithInclude("Font")
-                    where t.Id == modelItem.TemplateId
-                    select t)
-                    .FirstOrDefault();
+                template = _clipartTemplateRepository.GetAllWithInclude("Font").Where(p => p.Id == modelItem.TemplateId).FirstOrDefault();
             }
 
             if (template == null)
@@ -93,6 +85,7 @@ namespace AddTextToImage.WebUI.Controllers
             Image img = (Image)ic.ConvertFrom(model.Image);
             Bitmap bmpResult = new Bitmap(img);
 
+            //FromImage method creates a new Graphics from the specified Image.
             Graphics graphics = Graphics.FromImage(bmpResult);
 
             foreach (var modelItem in model.Items)
@@ -101,20 +94,11 @@ namespace AddTextToImage.WebUI.Controllers
 
                 if (modelItem.ItemType == 0)
                 {
-                    template =
-                        (from t in _textTemplateRepository.GetAllWithInclude("Font")
-                         where t.Id == modelItem.TemplateId
-                         select t)
-                         .FirstOrDefault();
+                    template = _textTemplateRepository.GetAllWithInclude("Font").Where(p => p.Id == modelItem.TemplateId).FirstOrDefault();
                 }
                 else
                 {
-                    template =
-                        (from t in _clipartTemplateRepository.GetAllWithInclude("Font")
-                         where t.Id == modelItem.TemplateId
-                         select t)
-                         .FirstOrDefault();
-
+                    template = _clipartTemplateRepository.GetAllWithInclude("Font").Where(p => p.Id == modelItem.TemplateId).FirstOrDefault();
                 }
 
                 if (template != null)
