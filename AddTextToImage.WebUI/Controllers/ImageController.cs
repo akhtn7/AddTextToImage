@@ -39,6 +39,9 @@ namespace AddTextToImage.WebUI.Controllers
         {
             TemplateBase template = null;
 
+            if (!ModelState.IsValid)
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+
             if (modelItem.ItemType == 0)
             {
                 template = _textTemplateRepository.GetAllWithInclude("Font").Where(p => p.Id == modelItem.TemplateId).FirstOrDefault();
@@ -74,7 +77,10 @@ namespace AddTextToImage.WebUI.Controllers
         [HttpGet]
         public HttpResponseMessage Result(int id)
         {
-            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+            HttpResponseMessage response;
+
+            if (!ModelState.IsValid)
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
 
             var model = _modelRepository.Get(id);
 
@@ -112,12 +118,14 @@ namespace AddTextToImage.WebUI.Controllers
                 }
             }
 
+            response = new HttpResponseMessage(HttpStatusCode.OK);
+
             using (MemoryStream memoryStream = new MemoryStream())
             {
                 bmpResult.Save(memoryStream, ImageFormat.Png);
 
                 response.Content = new ByteArrayContent(memoryStream.ToArray());
-                response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png"); //ToDo jpg
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
                 response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
                 response.Content.Headers.ContentDisposition.FileName = "result.png";
             }

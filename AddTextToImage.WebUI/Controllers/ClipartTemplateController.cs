@@ -29,7 +29,6 @@ namespace AddTextToImage.WebUI.Controllers
         [HttpGet]
         public HttpResponseMessage Image(int id)
         {
-            //ToDo
             if (!ModelState.IsValid)
                 return new HttpResponseMessage(HttpStatusCode.BadRequest);
 

@@ -18,6 +18,9 @@ namespace AddTextToImage.UnitTests
     [TestClass]
     public class ControllerTests
     {
+        ///<summary>
+        ///Test for ClipartTemplateController controller.
+        ///</summary>
         [TestMethod]
         public void Can_Retrieve_Clipart_Image_Data()
         {
@@ -45,7 +48,9 @@ namespace AddTextToImage.UnitTests
             Assert.AreEqual(result.Content.Headers.ContentType.MediaType, "image/png");
         }
 
-
+        ///<summary>
+        ///Test for ClipartTemplateController controller.
+        ///</summary>
         [TestMethod]
         public void Cannot_Retrieve_ClipartImage_Data_For_Invalid_ID()
         {
@@ -72,7 +77,9 @@ namespace AddTextToImage.UnitTests
             Assert.AreEqual(result.StatusCode, HttpStatusCode.BadRequest);
         }
 
-
+        ///<summary>
+        ///Test for TextTemplateController controller.
+        ///</summary>
         [TestMethod]
         public void Can_Retrieve_Text_Image_Data()
         {
@@ -101,7 +108,9 @@ namespace AddTextToImage.UnitTests
             Assert.AreEqual(result.Content.Headers.ContentType.MediaType, "image/png");
         }
 
-
+        ///<summary>
+        ///Test for TextTemplateController controller.
+        ///</summary>
         [TestMethod]
         public void Cannot_Retrieve_TextImage_Data_For_Invalid_ID()
         {
@@ -128,7 +137,9 @@ namespace AddTextToImage.UnitTests
             Assert.AreEqual(result.StatusCode, HttpStatusCode.BadRequest);
         }
 
-
+        ///<summary>
+        ///Test for SampleController controller.
+        ///</summary>
         [TestMethod]
         public void Can_Retrieve_Sample_Thumbnail_Data()
         {
@@ -155,7 +166,9 @@ namespace AddTextToImage.UnitTests
             Assert.AreEqual(result.Content.Headers.ContentType.MediaType, "image/png");
         }
 
-
+        ///<summary>
+        ///Test for SampleController controller.
+        ///</summary>
         [TestMethod]
         public void Cannot_Retrieve_Sample_Thumbnail_Data_For_Invalid_ID()
         {
@@ -182,8 +195,9 @@ namespace AddTextToImage.UnitTests
         }
 
 
-
-
+        ///<summary>
+        ///Test for ClipartGalleryController controller.
+        ///</summary>
         [TestMethod]
         public void Clipart_Gallery_Contains_All_Items()
         {

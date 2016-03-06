@@ -29,6 +29,9 @@ namespace AddTextToImage.WebUI.Controllers
         [HttpGet]
         public IEnumerable<int> List(int samplePageIndex)
         {
+            if (!ModelState.IsValid)
+                return new int[0];
+
             int[] result = _sampleRepository.GetAll().OrderBy(p => p.Id).Skip(samplePageIndex * PageSize).Take(PageSize).Select(p => p.Id).ToArray<int>();
 
             return result;
@@ -40,6 +43,9 @@ namespace AddTextToImage.WebUI.Controllers
         [HttpGet]
         public HttpResponseMessage Thumbnail(int id)
         {
+            if (!ModelState.IsValid)
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+
             Sample sample = _sampleRepository.Get(id);
 
             if (sample == null)

@@ -4,7 +4,7 @@
 
         function show(message) {
 
-            // If server returns the error message show it as 'Detailed description'.
+            // If server returns the error message show it as "Detailed description".
             var msg = "The server encountered an error." + ((message.length > 0) ? " Detailed description: " + message : "");
 
             $("#error-message").text(msg).show();
@@ -18,23 +18,21 @@
         }
     })();
     
-    // Represents a background image and array of text images.
+    // Save properties of source image and contain array of text images (modelItems).
     var model = (function () {
 
-        var id = 0;
-        var width = 0;
-        var height = 0;
+        var id;
+        var width;
+        var height;
         var canvas;
         var modelItems = [];
         var selectedItem = null;
-        var selectedElement = null;
         var elementStart;
         var mouseStart;
-        var svgPoint;
         var delImageWidth;
         var strokeWidth;
 
-        // Represents a text image.
+        // Save all information to generate image from the text.
         var ModelItem = function () {
 
             this.id = 0;
@@ -78,8 +76,8 @@
 
             $.ajax({
                 url: basePath + "api/ModelItem/Update/",
-                type: 'POST',
-                dataType: 'json',
+                type: "POST",
+                dataType: "json",
                 data: this.getData(),
 
                 error: function (xhr, textStatus, errorThrown) {
@@ -88,17 +86,17 @@
             });
         }
 
-        // Called if attribute or position of text image was changed.
+        // Called if attributes or position of text image was changed.
         ModelItem.prototype.change = function () {
 
             this.updateDatabase();
 
-            $("#img" + this.id)[0].setAttributeNS('http://www.w3.org/1999/xlink', 'href', basePath + "api/Image/ModelItem/" + this.id + "/" + this.getUrl());
+            $("#img" + this.id)[0].setAttributeNS("http://www.w3.org/1999/xlink", "href", basePath + "api/Image/ModelItem/" + this.id + "/" + this.getUrl());
 
-            $("#hidden-img" + this.id).attr('src', basePath + "api/Image/ModelItem/" + this.id + "/" + this.getUrl());
+            $("#hidden-img" + this.id).attr("src", basePath + "api/Image/ModelItem/" + this.id + "/" + this.getUrl());
         }
 
-        // Represents a text template gallery.
+        // Represents Text Template Gallery.
         var textSelector = (function () {
 
             var selectedItemId = 0;
@@ -152,7 +150,7 @@
                 $.ajax({
                     type: "GET",
                     url: basePath + "api/TextGallery/List/",
-                    dataType: 'json',
+                    dataType: "json",
 
                     success: function (data) {
 
@@ -275,7 +273,7 @@
 
         })();
 
-        // Represents a clipart gallery.
+        // Represents Clipart Gallery.
         var clipartSelector = (function () {
 
             var selectedGallery = 1;
@@ -324,7 +322,7 @@
                 $.ajax({
                     type: "GET",
                     url: basePath + "api/ClipartGallery/List/",
-                    dataType: 'json',
+                    dataType: "json",
 
                     success: function (data) {
 
@@ -412,8 +410,8 @@
 
                 $.ajax({
                     url: basePath + "api/Model/AddModelItem/",
-                    type: 'PUT',
-                    dataType: 'json',
+                    type: "PUT",
+                    dataType: "json",
                     data: modelItem.getData(),
                     success: function (modelItemId) {
 
@@ -439,21 +437,10 @@
             textSelector.init();
             clipartSelector.init();
 
-            // Get a reference to the SVG element 
+            // Get a reference to the SVG container 
             canvas = document.getElementById("canvas");
 
-            // Creates a SVGPoint object
-            svgPoint = canvas.createSVGPoint();
-
-            $(canvas).on("click", function () {
-
-                // Hide bounding rectangle and Delete image.
-                deselectItem();
-
-                $("#sample-text").val("");
-                $("#btn-add-text").prop('disabled', false).removeClass('disable');
-                $("#sample-text").prop('disabled', false);
-            });
+            $(canvas).on("click", onClickCanvas);
 
             $("#font-size").on("change", function () {
 
@@ -516,8 +503,8 @@
 
                     $.ajax({
                         url: basePath + "api/Model/AddModelItem/",
-                        type: 'PUT',
-                        dataType: 'json',
+                        type: "PUT",
+                        dataType: "json",
                         data: modelItem.getData(),
 
                         success: function (modelItemId) {
@@ -535,24 +522,27 @@
             });
         }
 
-        // Add background image.
+        // Add source image.
         function addModel(modelId, modelWidth, modelHeight) {
 
+            // Save id, width and height of the source image.
             id = modelId;
             width = modelWidth;
             height = modelHeight;
 
-            var svgBackgroundImg = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-            svgBackgroundImg.setAttribute('id', "model" + id);
-            svgBackgroundImg.setAttribute('height', "100%");
-            svgBackgroundImg.setAttribute('width', "100%");
-            svgBackgroundImg.setAttributeNS('http://www.w3.org/1999/xlink', 'href', basePath + "api/Model/Image/" + id + "/");
-            svgBackgroundImg.setAttribute('x', '0');
-            svgBackgroundImg.setAttribute('y', '0');
+            // Create SVG <image> element for source image.
+            var svgSourceImg = document.createElementNS("http://www.w3.org/2000/svg", "image");
+            svgSourceImg.setAttribute("id", "model" + id);
+            svgSourceImg.setAttribute("height", "100%");
+            svgSourceImg.setAttribute("width", "100%");
+            svgSourceImg.setAttributeNS("http://www.w3.org/1999/xlink", "href", basePath + "api/Model/Image/" + id + "/");
+            svgSourceImg.setAttribute("x", "0");
+            svgSourceImg.setAttribute("y", "0");
             canvas.setAttribute("style", "margin-left: auto; margin-right: auto; max-width: " + modelWidth + "px;");
             canvas.setAttribute("viewBox", "0 0 " + modelWidth + " " + modelHeight);
 
-            canvas.appendChild(svgBackgroundImg);
+            // Append image to SVG container
+            canvas.appendChild(svgSourceImg);
 
             if (detectIE()) {
 
@@ -569,13 +559,13 @@
             // Set URL for downloading the resulting image.
             $("#form-save-result").attr("action", basePath + "api/Image/Result/" + id);
 
-            // Set size for Delete image and thickness for bounding rectangle depending on the width of the background image.
+            // Set size for Delete image and thickness for bounding rectangle depending on the width of the source image.
             setDelImageSize();
         }
 
         function addModelFromSample(data) {
 
-            // Add background image.
+            // Add source image.
             addModel(data.Id, data.ImageWidth, data.ImageHeight);
 
             for (var i = 0; i < data.Items.length; i++) {
@@ -604,77 +594,80 @@
         // Add text image.
         function addModelItem(modelItem) {
 
-            var svgGroup = document.createElementNS("http://www.w3.org/2000/svg", 'g');
+            // Create SVG <g> element.
+            var svgGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
             svgGroup.setAttribute("id", "img-group" + modelItem.id);
 
-            // Add bounding rectangle.
-            var svgRect = document.createElementNS("http://www.w3.org/2000/svg", 'rect');
-            svgRect.setAttribute('id', "rect" + modelItem.id);
-            svgRect.setAttribute('x', modelItem.positionLeft);
-            svgRect.setAttribute('y', modelItem.positionTop);
-            svgRect.setAttribute('height', "0");
-            svgRect.setAttribute('width', "0");
-            svgRect.setAttribute('stroke', "red");
-            svgRect.setAttribute('stroke-width', rectangleThickness);
-            svgRect.setAttribute('stroke-dasharray', "5");
-            svgRect.setAttribute('fill-opacity', "0.4");
-            svgRect.setAttribute('fill', "none");
+            // Create SVG <rect> element: bounding rectangle for the image
+            var svgRect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            svgRect.setAttribute("id", "rect" + modelItem.id);
+            svgRect.setAttribute("x", modelItem.positionLeft);
+            svgRect.setAttribute("y", modelItem.positionTop);
+            svgRect.setAttribute("height", "0");
+            svgRect.setAttribute("width", "0");
+            svgRect.setAttribute("stroke", "red");
+            svgRect.setAttribute("stroke-width", rectangleThickness);
+            svgRect.setAttribute("stroke-dasharray", "5");
+            svgRect.setAttribute("fill-opacity", "0.4");
+            svgRect.setAttribute("fill", "none");
             svgRect.style.display = "none";
 
             svgGroup.appendChild(svgRect);
 
-            // Add image generated from the text.
-            var svgTextImg = document.createElementNS("http://www.w3.org/2000/svg", 'image');
-            svgTextImg.setAttribute('id', "img" + modelItem.id);
-            svgTextImg.setAttribute('height', "0");
-            svgTextImg.setAttribute('width', "0");
-            svgTextImg.setAttributeNS('http://www.w3.org/1999/xlink', 'href', basePath + "api/Image/ModelItem/" + modelItem.id + "/" + modelItem.getUrl());
-            svgTextImg.setAttribute('x', modelItem.positionLeft);
-            svgTextImg.setAttribute('y', modelItem.positionTop);
+            // Create SVG <image> element for image generated from the text.
+            var svgTextImg = document.createElementNS("http://www.w3.org/2000/svg", "image");
+            svgTextImg.setAttribute("id", "img" + modelItem.id);
+            svgTextImg.setAttribute("height", "0");
+            svgTextImg.setAttribute("width", "0");
+            svgTextImg.setAttributeNS("http://www.w3.org/1999/xlink", "href", basePath + "api/Image/ModelItem/" + modelItem.id + "/" + modelItem.getUrl());
+            svgTextImg.setAttribute("x", modelItem.positionLeft);
+            svgTextImg.setAttribute("y", modelItem.positionTop);
             svgTextImg.style.cursor = "move";
 
             svgGroup.appendChild(svgTextImg);
 
-            // Add Delete image.
-            var svgDelImg = document.createElementNS("http://www.w3.org/2000/svg", 'image');
-            svgDelImg.setAttribute('id', "del" + modelItem.id);
-            svgDelImg.setAttributeNS('http://www.w3.org/1999/xlink', 'href', basePath + "Content/Images/delete.png");
-            svgDelImg.setAttribute('x', modelItem.positionLeft);
-            svgDelImg.setAttribute('y', modelItem.positionTop - 16);
+            // Create SVG <image> element for Delete image.
+            var svgDelImg = document.createElementNS("http://www.w3.org/2000/svg", "image");
+            svgDelImg.setAttribute("id", "del" + modelItem.id);
+            svgDelImg.setAttributeNS("http://www.w3.org/1999/xlink", "href", basePath + "Content/Images/delete.png");
+            svgDelImg.setAttribute("x", modelItem.positionLeft);
+            svgDelImg.setAttribute("y", modelItem.positionTop - 16);
             svgDelImg.style.display = "none";
             svgDelImg.style.cursor = "pointer";
-            svgDelImg.setAttribute('height', delImageSize);
-            svgDelImg.setAttribute('width', delImageSize);
+            svgDelImg.setAttribute("height", delImageSize);
+            svgDelImg.setAttribute("width", delImageSize);
 
             svgGroup.appendChild(svgDelImg);
 
-            // Add the hole group: bounding rectangle, image generated from the text and Delete image to canvas.
+            // Add the whole group: bounding rectangle, image generated from the text and Delete image to canvas.
             canvas.appendChild(svgGroup);
 
-            // Create hidden additional image. When it is loaded its width and height set to svgRect and svgTextImg items.
+            // Create hidden additional image. When it's loaded its width and height are set to svgRect and svgTextImg elements.
             var $hiddenImg = $("<img>", {
                 id: "hidden-img" + modelItem.id,
                 src: basePath + "api/Image/ModelItem/" + modelItem.id + "/" + modelItem.getUrl()
             });
 
+            // Add created image to hidden area.
             $("#hidden-images").append($hiddenImg);
 
             // Attach events.
             $($hiddenImg).on("load", onLoadImage);
-            $(svgTextImg).on("mousedown", onMouseDown);
-            $(svgTextImg).on("mouseup", onMouseUp);
-            $(svgTextImg).on("click", onClick);
-            $(svgTextImg).on("touchstart", onTouchstart);
-            $(svgTextImg).on("touchend", onTouchEnd);
             $(svgDelImg).on("click", onClickDelete);
+            $(svgTextImg).on("mousedown", onMoveStart);
+            $(svgTextImg).on("mouseup", onMoveEnd);
+            $(svgTextImg).on("click", onClickImage);
+            $(svgTextImg).on("touchstart", onMoveStart);
+            $(svgTextImg).on("touchend", onMoveEnd);
 
+            // Add item to an array.
             modelItems.push(modelItem);
 
             // Select added item: bounding rectangle and Delete image are visible.
             selectItem(modelItem.id);
         }
 
-        // Show bounding rectangle and Delete image. Set values for visual controls for selected text image.
+        // Show bounding rectangle and Delete image. Set values for controls in Control Panel for selected modelItem.
         function selectItem(id) {
 
             // If selected, deselect text image.
@@ -693,23 +686,21 @@
                 // Show bounding rectangle and Delete image.
                 selectedItem.select();
 
-                selectedElement = document.getElementById("img" + id);
-
-                // Set values for visual controls for selected text image.
+                // Set values for controls in Control Panel for selected text image.
                 $("#sample-text").val(selectedItem.text);
                 $("#font-size").val(selectedItem.fontSize);
                 $("#font-color").spectrum("set", selectedItem.fontColor);
 
                 $("#rotation").val(selectedItem.rotation);
-                $("#btn-add-text").prop('disabled', true).addClass('disable');
+                $("#btn-add-text").prop("disabled", true).addClass("disable");
 
                 if (selectedItem.itemType == 1) {
-                    $("#sample-text").prop('disabled', true);
-                    $("#btn-template").prop('disabled', true).addClass('disable');
+                    $("#sample-text").prop("disabled", true);
+                    $("#btn-template").prop("disabled", true).addClass("disable");
                 }
                 else {
-                    $("#sample-text").prop('disabled', false);
-                    $("#btn-template").prop('disabled', false).removeClass('disable');
+                    $("#sample-text").prop("disabled", false);
+                    $("#btn-template").prop("disabled", false).removeClass("disable");
                 }
 
                 textSelector.setTextTemplate(selectedItem.templateId);
@@ -726,50 +717,69 @@
             }
         }
 
-        function onMouseDown(e) {
+        // mousedown and touchstart event handlers.
+        function onMoveStart(e) {
 
-            e.stopPropagation();
+            // Needed for Firefox to allow dragging correctly
             e.preventDefault();
 
-            mouseStart = cursorPoint(e);
+            if (e.type === "touchstart") {
+
+                // Attach touchmove event handler
+                $(e.target).on("touchmove", onMove);
+
+                // Save the initial touch coordinates 
+                mouseStart = getPoint(e.originalEvent.touches[0]);
+
+            }
+            else {
+
+                // Attach mousemove and mouseout event handlers
+                $(e.target).on("mousemove", onMove).on("mouseout", onMoveEnd);
+
+                // Save the initial mouse coordinates
+                mouseStart = getPoint(e);
+            }
+
+            // Save top and left position of the image.
             elementStart = {
-                x: e.target['x'].animVal.value,
-                y: e.target['y'].animVal.value
+                x: e.target["x"].animVal.value,
+                y: e.target["y"].animVal.value
             };
 
-            $(e.target).on("mousemove", onMouseMove);
-
+            // Show bounding rectangle and Delete image. Set values for controls in Control Panel for selected modelItem.
             selectItem(e.target.id.substring(3));
         }
 
-        function onMouseMove(e) {
+        // mousemove and touchmove event handlers.
+        function onMove(e) {
 
-            e.stopPropagation();
-            e.preventDefault();
-
+            // Get digital part of the image id.
             var id = e.target.id.substring(3);
 
-            var current = cursorPoint(e);
-            svgPoint.x = current.x - mouseStart.x;
-            svgPoint.y = current.y - mouseStart.y;
+            // Get current mouse or touch coordinates.
+            var svgPoint = (e.type === "mousemove") ? getPoint(e) : getPoint(e.originalEvent.touches[0]);
+
+            svgPoint.x = svgPoint.x - mouseStart.x;
+            svgPoint.y = svgPoint.y - mouseStart.y;
 
             var m = e.target.getTransformToElement(canvas).inverse();
 
             m.e = m.f = 0;
             svgPoint = svgPoint.matrixTransform(m);
 
-            // Set new position for text image, bounding rectangle and Delete image.
+            // Set new position for image, bounding rectangle and Delete image.
             $("#img" + id).attr({
                 "x": elementStart.x + svgPoint.x,
-                'y': elementStart.y + svgPoint.y
+                "y": elementStart.y + svgPoint.y
             });
             $("#rect" + id).attr({
                 "x": elementStart.x + svgPoint.x,
-                'y': elementStart.y + svgPoint.y
+                "y": elementStart.y + svgPoint.y
             });
             $("#del" + id).attr({
                 "x": elementStart.x + svgPoint.x + parseInt($("#img" + id).attr("width")),
-                'y': elementStart.y + svgPoint.y - delImageSize
+                "y": elementStart.y + svgPoint.y - delImageSize
             });
 
             if (selectedItem != null) {
@@ -779,85 +789,18 @@
             }
         }
 
-        function onMouseUp(e) {
+        // mouseup, mouseout and touchend event handlers.
+        function onMoveEnd(e) {
 
-            e.stopPropagation();
-            e.preventDefault();
+            if (e.type === "touchend") {
 
-            $(e.target).off("mousemove", onMouseMove);
-
-            if (selectedElement != null) {
-                selectedElement = null;
+                // Detach touchmove event handler
+                $(e.target).off("touchmove", onMove);
             }
-            
-            if (selectedItem != null) {
-                selectedItem.updateDatabase();
-            }
-        }
+            else {
 
-
-        function onTouchstart(e) {
-
-            e.stopPropagation();
-            e.preventDefault();
-
-            mouseStart = cursorPoint(e.originalEvent.touches[0]);
-            elementStart = {
-                x: e.target['x'].animVal.value,
-                y: e.target['y'].animVal.value
-            };
-
-            $(e.target).on("touchmove", onTouchMove);
-
-            selectItem(e.target.id.substring(3));
-        }
-
-        function onTouchMove(e) {
-
-            e.stopPropagation();
-            e.preventDefault();
-
-            var id = e.target.id.substring(3);
-
-            var current = cursorPoint(e.originalEvent.touches[0]);
-            svgPoint.x = current.x - mouseStart.x;
-            svgPoint.y = current.y - mouseStart.y;
-
-            var m = e.target.getTransformToElement(canvas).inverse();
-
-            m.e = m.f = 0;
-            svgPoint = svgPoint.matrixTransform(m);
-
-            // Set new position for text image, bounding rectangle and Delete image.
-            $("#img" + id).attr({
-                "x": elementStart.x + svgPoint.x,
-                'y': elementStart.y + svgPoint.y
-            });
-            $("#rect" + id).attr({
-                "x": elementStart.x + svgPoint.x,
-                'y': elementStart.y + svgPoint.y
-            });
-            $("#del" + id).attr({
-                "x": elementStart.x + svgPoint.x + parseInt($("#img" + id).attr("width")),
-                'y': elementStart.y + svgPoint.y - delImageSize
-            });
-
-            if (selectedItem != null) {
-
-                selectedItem.positionLeft = Math.round(elementStart.x + svgPoint.x);
-                selectedItem.positionTop = Math.round(elementStart.y + svgPoint.y);
-            }
-        }
-
-        function onTouchEnd(e) {
-
-            e.stopPropagation();
-            e.preventDefault();
-
-            $(e.target).off("touchmove", onTouchMove);
-
-            if (selectedElement != null) {
-                selectedElement = null;
+                // Detach mousemove and mouseout event handlers
+                $(e.target).off("mousemove", onMove).off("mouseout", onMoveEnd);
             }
 
             if (selectedItem != null) {
@@ -866,12 +809,14 @@
         }
 
 
-        function onClick(e) {
+        // click event handler. Attached to text image.
+        function onClickImage(e) {
 
+            // Needed to prevent onClickCanvas event handler firing.
             e.stopPropagation();
-            e.preventDefault();
         }
 
+        // click event handler. Attached to Delete image.
         function onClickDelete(e) {
 
             e.stopPropagation();
@@ -881,8 +826,8 @@
                 // Send request to delete text image on the server.
                 $.ajax({
                     url: basePath + "api/ModelItem/Delete/",
-                    type: 'DELETE',
-                    dataType: 'json',
+                    type: "DELETE",
+                    dataType: "json",
                     data: selectedItem.getData(),
 
                     success: function () {
@@ -899,17 +844,24 @@
             }
         }
 
-        // When hidden image is loaded set width and height for text image and bounding rectangle. And set position for Delete image.
+        // click event handler. Attached to SVG container.
+        function onClickCanvas() {
+
+            // Hide bounding rectangle and Delete image.
+            deselectItem();
+
+            $("#sample-text").val("").prop("disabled", false);
+            $("#btn-add-text").prop("disabled", false).removeClass("disable");
+        }
+
+        // When hidden image is loaded width and height for text image and bounding rectangle and position for Delete image are set.
         function onLoadImage(e) {
 
             var id = this.id.substring(10);
 
-            $("#img" + id).attr("width", this.width);
-            $("#img" + id).attr("height", this.height);
-            $("#rect" + id).attr("width", this.width);
-            $("#rect" + id).attr("height", this.height);
-            $("#del" + id).attr("x", parseInt($("#img" + id).attr("x")) + this.width);
-            $("#del" + id).attr("y", parseInt($("#img" + id).attr("y")) - delImageSize);
+            $("#img" + id).attr("width", this.width).attr("height", this.height);
+            $("#rect" + id).attr("width", this.width).attr("height", this.height);
+            $("#del" + id).attr("x", parseInt($("#img" + id).attr("x")) + this.width).attr("y", parseInt($("#img" + id).attr("y")) - delImageSize);
         }
 
         function setDelImageSize() {
@@ -936,39 +888,43 @@
             }
         }
 
-        function cursorPoint(evt) {
-            svgPoint.x = evt.clientX;
-            svgPoint.y = evt.clientY;
+        function getPoint(e) {
+
+            var svgPoint = canvas.createSVGPoint();
+
+            svgPoint.x = e.clientX;
+            svgPoint.y = e.clientY;
+
             return svgPoint.matrixTransform(canvas.getScreenCTM().inverse());
         }
 
         // Convert Color from ARGB format to RGB format.
         function argbToRGB(color) {
 
-            return '#' + ('000000' + (color & 0xFFFFFF).toString(16)).slice(-6);
+            return "#" + ("000000" + (color & 0xFFFFFF).toString(16)).slice(-6);
         }
 
         // Return version of IE or false if browser isn`t IE.
         function detectIE() {
             var ua = window.navigator.userAgent;
 
-            var msie = ua.indexOf('MSIE ');
+            var msie = ua.indexOf("MSIE ");
             if (msie > 0) {
                 // IE 10 or older => return version number.
-                return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+                return parseInt(ua.substring(msie + 5, ua.indexOf(".", msie)), 10);
             }
 
-            var trident = ua.indexOf('Trident/');
+            var trident = ua.indexOf("Trident/");
             if (trident > 0) {
                 // IE 11 => return version number.
-                var rv = ua.indexOf('rv:');
-                return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+                var rv = ua.indexOf("rv:");
+                return parseInt(ua.substring(rv + 3, ua.indexOf(".", rv)), 10);
             }
 
-            var edge = ua.indexOf('Edge/');
+            var edge = ua.indexOf("Edge/");
             if (edge > 0) {
                 // Edge (IE 12+) => return version number.
-                return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
+                return parseInt(ua.substring(edge + 5, ua.indexOf(".", edge)), 10);
             }
 
             // Other browser.
@@ -985,7 +941,7 @@
 
     var sampleSelector = (function () {
 
-        var model = null;
+        var model;
         var samplePageIndex = 0;
         var sampleTotalPage = 0;
 
@@ -993,9 +949,9 @@
 
             model = modelParam;
 
-            sampleTotalPage = $('#samples-holder').data("sample-total-page");
+            sampleTotalPage = $("#samples-holder").data("sample-total-page");
 
-            // Show previous items from the Sample gallery
+            // Show previous items from Sample Gallery.
             $("#btn-sample-prev").on("click", function (e) {
 
                 if (samplePageIndex > 0) {
@@ -1004,7 +960,7 @@
                 }
             });
 
-            // Show next items from the Sample gallery
+            // Show next items from Sample Gallery.
             $("#btn-sample-next").on("click", function (e) {
 
                 if (samplePageIndex < sampleTotalPage) {
@@ -1013,30 +969,32 @@
                 }
             });
 
-            $(".sample > div").on("click", function (event) {
+            $(".sample > div").on("click", onClickSampleItem);
+        }
 
-                var id = $(this).children().first().data("id");
+        function onClickSampleItem() {
 
-                if (id > 0) {
-                    $.ajax({
-                        url: basePath + "api/Model/CreateFromSample/" + id + "/", //ToDo - Check?????
-                        type: "PUT",
-                        dataType: "json",
-                        data: "templateId=" + id,
+            var id = $(this).children().first().data("id");
 
-                        success: function (data) {
-                            $("#select-image").remove();
-                            $("#image-worker").show();
+            if (id > 0) {
+                $.ajax({
+                    url: basePath + "api/Model/CreateFromSample/" + id + "/",
+                    type: "PUT",
+                    dataType: "json",
+                    data: "templateId=" + id,
 
-                            model.addModelFromSample(data);
-                        },
+                    success: function (data) {
+                        $("#select-image").remove();
+                        $("#image-worker").show();
 
-                        error: function (xhr, textStatus, errorThrown) {
-                            errorMessage.show(errorThrown);
-                        }
-                    });
-                }
-            });
+                        model.addModelFromSample(data);
+                    },
+
+                    error: function (xhr, textStatus, errorThrown) {
+                        errorMessage.show(errorThrown);
+                    }
+                });
+            }
         }
 
         function changeSamplePage(pageIncrement) {
@@ -1044,23 +1002,27 @@
             samplePageIndex += pageIncrement;
 
             if (samplePageIndex == 0){
-                $("#btn-sample-prev").prop('disabled', true).addClass('disable');
+                $("#btn-sample-prev").prop("disabled", true).addClass("disable");
             }
             else {
-                $("#btn-sample-prev").prop('disabled', false).removeClass('disable');
+                $("#btn-sample-prev").prop("disabled", false).removeClass("disable");
             }
 
             if (samplePageIndex == sampleTotalPage) {
-                $("#btn-sample-next").prop('disabled', true).addClass('disable');
+                $("#btn-sample-next").prop("disabled", true).addClass("disable");
             }
             else {
-                $("#btn-sample-next").prop('disabled', false).removeClass('disable');
+                $("#btn-sample-next").prop("disabled", false).removeClass("disable");
             }
 
+            for (var i = 0; i < 8; i++) {
+                $("#sample" + i).attr("src", basePath + "Content/Images/sample-loading.gif");
+            }
+            
             $.ajax({
                 type: "GET",
                 url: basePath + "api/Sample/List/",
-                dataType: 'json',
+                dataType: "json",
                 data: "samplePageIndex=" + samplePageIndex, 
 
                 success: function (sampleIds) {
@@ -1068,12 +1030,12 @@
                     var count = 0;
 
                     sampleIds.forEach(function (item, i) {
-                        $("#sample" + i).attr("src", basePath + "api/Sample/Thumbnail/" + item + "/").attr("data-id", item).parent().addClass('sample-item');
+                        $("#hidden-sample" + i).attr("src", basePath + "api/Sample/Thumbnail/" + item + "/").attr("data-id", item).on("load", onLoadImage);
                         count++;
                     })
 
                     for(var i = count; i < 8; i++){
-                        $("#sample" + i).attr("src", basePath + "Content/Images/empty-sample.png").attr("data-id", 0).parent().removeClass('sample-item');
+                        $("#sample" + i).attr("src", basePath + "Content/Images/empty-sample.png").attr("data-id", 0).parent().removeClass("sample-item");
                     }
                 },
 
@@ -1081,6 +1043,15 @@
                     errorMessage.show(errorThrown);
                 }
             });
+            
+        }
+
+        function onLoadImage(e) {
+
+            var id = this.id.substring(13);
+            var imageId = $(this).attr("data-id");
+
+            $("#sample" + id).attr("src", basePath + "api/Sample/Thumbnail/" + imageId + "/").attr("data-id", imageId).parent().addClass("sample-item");
         }
 
         return {
@@ -1090,80 +1061,106 @@
 
     var fileUpload = (function () {
 
-        var model = null;
+        var model;
 
+        function init(modelParam) {
+
+            model = modelParam;
+
+            $("#drop-file").on("dragover", function (e) {
+
+                e.preventDefault();
+                e.stopPropagation();
+            });
+
+            $("#drop-file").on("dragenter", function (e) {
+
+                e.preventDefault();
+                e.stopPropagation();
+            });
+
+            $("#drop-file").on("drop", onDropFileUpload);
+
+            // If user selects the source image upload it to the server.
+            $("#fileUpload").on("change", onChangeFileUpload);
+        }
+
+        function onDropFileUpload(e) {
+
+            if (e.originalEvent.dataTransfer) {
+
+                if (e.originalEvent.dataTransfer.files.length) {
+
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    uploadFile(e.originalEvent.dataTransfer.files);
+                }
+            }
+        }
+
+        function onChangeFileUpload() {
+
+            uploadFile($("#fileUpload").get(0).files);
+        }
+
+        // Upload source image to the server.
         function uploadFile(files) {
 
             var data = new FormData();
 
             // Add the uploaded image content to the form data collection.
             if (files.length > 0) {
+
+                disableControls();
+                $("#file-placeholder").attr("src", basePath + "Content/Images/image-loading.gif");
+                
                 data.append("UploadedImage", files[0]);
+
+                // AJAX request to upload source image to the server.
+                $.ajax({
+                    type: "POST",
+                    url: basePath + "api/Model/UploadFile/",
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    //timeout:5000,
+
+                    success: function (data) {
+
+                        $("#select-image").remove();
+                        $("#image-worker").show();
+
+                        model.addModel(data.Id, data.ImageWidth, data.ImageHeight);
+                    },
+
+                    error: function (xhr, textStatus, errorThrown) {
+                        errorMessage.show(errorThrown);
+                    }
+                });
             }
-
-            // Upload background image to the server.
-            $.ajax({
-                type: "POST",
-                url: basePath + "api/Model/UploadFile/",
-                contentType: false,
-                processData: false,
-                data: data,
-                //timeout:5000,
-
-                success: function (data) {
-
-                    $("#select-image").remove();
-                    $("#image-worker").show();
-
-                    model.addModel(data.Id, data.ImageWidth, data.ImageHeight);
-                },
-
-                error: function (xhr, textStatus, errorThrown) {
-                    errorMessage.show(errorThrown);
-                }
-            });
         }
 
+        function disableControls() {
 
-        function init(modelParam) {
+            $("#btn-sample-prev").prop("disabled", true).addClass("disable");
+            $("#btn-sample-next").prop("disabled", true).addClass("disable");
+            $("#btnFileUpload").addClass("disable");
 
-            model = modelParam;
+            $("#fileUpload").prop("disabled", true).off("change", onChangeFileUpload).css("cursor", "default");
 
-            $('#drop-file').on('dragover', function (e) {
 
-                e.preventDefault();
-                e.stopPropagation();
-            });
+            $("#drop-file").off("drop").off("dragover").off("dragenter");
 
-            $('#drop-file').on('dragenter', function (e) {
+            $(".sample > div").off("click");
 
-                e.preventDefault();
-                e.stopPropagation();
-            });
-
-            $('#drop-file').on('drop', function (e) {
-
-                if (e.originalEvent.dataTransfer) {
-
-                    if (e.originalEvent.dataTransfer.files.length) {
-
-                        e.preventDefault();
-                        e.stopPropagation();
-
-                        uploadFile(e.originalEvent.dataTransfer.files);
-                    }
-                }
-            });
-
-            // If user selects the background image upload it to the server.
-            $('#fileUpload').on('change', function () {
-
-                uploadFile($("#fileUpload").get(0).files);
-            });
+            for (var i = 0; i < 8; i++) {
+                $("#sample" + i).parent().removeClass("sample-item").css("opacity", "0.5");
+            }
         }
 
         return {
-            init: init,
+            init: init
         }
     })();
  

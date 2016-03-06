@@ -26,6 +26,10 @@ namespace AddTextToImage.WebUI.Controllers
         [HttpPost]
         public void Update(ModelItem modelItem)
         {
+            //ToDo JavaScript does not know if modelItem saves in the database
+            if (!ModelState.IsValid)
+                return;
+
             var mi = _modelItemRepository.Get(modelItem.Id);
 
             if (mi != null)
@@ -45,6 +49,10 @@ namespace AddTextToImage.WebUI.Controllers
         [HttpDelete]
         public void Delete(ModelItem modelItem)
         {
+            //ToDo JavaScript does not know if modelItem deletes from the database
+            if (!ModelState.IsValid)
+                return;
+
             var mi = _modelItemRepository.Get(modelItem.Id);
 
             if (mi != null)

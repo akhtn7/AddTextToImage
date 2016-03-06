@@ -68,6 +68,9 @@ namespace AddTextToImage.WebUI.Controllers
         [HttpPut]
         public Model CreateFromSample(int id)
         {
+            if (!ModelState.IsValid)
+                return null;
+
             Sample sample = _sampleRepository.Get(id);
 
             if (sample != null)
@@ -109,17 +112,17 @@ namespace AddTextToImage.WebUI.Controllers
         [HttpPut]
         public int AddModelItem(ModelItem modelItem)
         {
-            //ToDo ModelState.IsValid
+            if (!ModelState.IsValid)
+                return 0;
 
             var model = _modelRepository.Get(modelItem.ModelId);
 
-            if (model != null)
-            {
-                model.Items.Add(modelItem);
-                _modelRepository.Save();
-            }
+            if (model == null)
+                return 0;
 
-            //ToDo - if model == null ?????
+            model.Items.Add(modelItem);
+            _modelRepository.Save();
+
             return modelItem.Id;
         }
 
@@ -129,6 +132,9 @@ namespace AddTextToImage.WebUI.Controllers
         [HttpGet]
         public HttpResponseMessage Image(int id)
         {
+            if (!ModelState.IsValid)
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+
             var image = _modelRepository.Get(id);
 
             if (image == null)
@@ -138,6 +144,7 @@ namespace AddTextToImage.WebUI.Controllers
 
             response.Content = new ByteArrayContent(image.Image);
             response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+
             return response;
         }
     }

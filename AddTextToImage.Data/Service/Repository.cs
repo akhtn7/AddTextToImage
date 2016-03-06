@@ -65,7 +65,6 @@ namespace AddTextToImage.Data.Service
             dbContext.Entry(o).State = EntityState.Deleted;
         }
 
-        //ToDo Do we need this method?
         public void SetStateModified(T o)
         {
             dbContext.Entry(o).State = System.Data.Entity.EntityState.Modified;

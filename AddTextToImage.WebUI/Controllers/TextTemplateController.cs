@@ -32,6 +32,9 @@ namespace AddTextToImage.WebUI.Controllers
         [HttpGet]
         public HttpResponseMessage Image(int id)
         {
+            if (!ModelState.IsValid)
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+
             var textTemplate = _textTemplateRepository.Get(id);
 
             if (textTemplate == null)

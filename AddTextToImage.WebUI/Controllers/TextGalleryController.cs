@@ -24,8 +24,6 @@ namespace AddTextToImage.WebUI.Controllers
             _textGalleryRepository = textGalleryRepository;
         }
 
-
-        // ToDo - all data are sent
         [HttpGet]
         public List<TextGallery> List()
         {

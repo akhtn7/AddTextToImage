@@ -136,11 +136,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\AddTextToImage.mdf" />
+    <Content Include="App_Data\AddTextToImage_log.ldf">
+      <DependentUpon>AddTextToImage.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\Images\delete.png" />
     <Content Include="Content\Images\demo.png" />
     <Content Include="Content\Images\empty-sample.png" />
     <Content Include="Content\Images\header_bgr.png" />
     <Content Include="Content\Images\file-placeholder.png" />
+    <Content Include="Content\Images\image-loading.gif" />
+    <Content Include="Content\Images\sample-loading.gif" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\spectrum.css" />
@@ -222,7 +228,6 @@
     <Content Include="fonts\Rounded Elegance.ttf" />
     <Content Include="fonts\Metropolitan.ttf" />
     <Content Include="fonts\sonic_comic.ttf" />
-    <Content Include="fonts\dwerneck.ttf" />
     <Content Include="fonts\WeLoveCuteThings.ttf" />
     <Content Include="fonts\SpongeMeetsVanilla.ttf" />
     <Content Include="fonts\CindyyosMom.ttf" />
@@ -241,6 +246,7 @@
     <Content Include="fonts\ggsloveme.ttf" />
     <Content Include="fonts\SIMPLIFICA Typeface.ttf" />
     <Content Include="fonts\BULLETS2.TTF" />
+    <Content Include="fonts\Luna.ttf" />
     <None Include="Properties\PublishProfiles\addtexttoimage.somee.com.pubxml" />
     <None Include="Properties\PublishProfiles\LocalHost.pubxml" />
     <Content Include="Scripts\app.js" />
@@ -269,7 +275,6 @@
     </Compile>
     <Compile Include="ViewModels\HomeIndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\SessionExtensions.cs" />
     <Compile Include="Utils\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -280,6 +285,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <None Include="Properties\PublishProfiles\SmaterAsp.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -301,9 +307,7 @@
       <Name>AddTextToImage.ImageGenarator</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

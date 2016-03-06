@@ -14,13 +14,13 @@
                         Drag your picture here
                     </div>
                     <div class="drag-picture-img">
-                        <img src="~/Content/Images/file-placeholder.png" />
+                        <img id="file-placeholder" src="~/Content/Images/file-placeholder.png" />
                     </div>
                     <div class="select-picture">
                         or select picture from:
                     </div>
                     <div>
-                        <div class="btn">
+                        <div id="btnFileUpload" class="btn">
                             <span>Computer</span>
                             <input id="fileUpload" type="file" accept="image/jpeg,image/png,image/gif" value="Computer" />
                         </div>
@@ -85,7 +85,7 @@
                     <label for="sample-text">Text:</label>
                 </div>
                 <div class="settings-right">
-                    <input id="sample-text" type="text" maxlength="50" class="settings-ctl" value="Enter text here" />
+                    <input id="sample-text" type="text" maxlength="50" class="settings-ctl" placeholder="Enter text here" />
                 </div>
             </div>
             <div>
@@ -312,6 +312,18 @@
 
 <div style="display:none">
     <div id="hidden-images">
+    </div>
+    <div id="hidden-samples">
+        <img id="hidden-sample0" data-id="0" src="~/Content/Images/sample-loading.gif">
+        <img id="hidden-sample1" data-id="0" src="~/Content/Images/sample-loading.gif">
+        <img id="hidden-sample2" data-id="0" src="~/Content/Images/sample-loading.gif">
+        <img id="hidden-sample3" data-id="0" src="~/Content/Images/sample-loading.gif">
+        <img id="hidden-sample4" data-id="0" src="~/Content/Images/sample-loading.gif">
+        <img id="hidden-sample5" data-id="0" src="~/Content/Images/sample-loading.gif">
+        <img id="hidden-sample6" data-id="0" src="~/Content/Images/sample-loading.gif">
+        <img id="hidden-sample7" data-id="0" src="~/Content/Images/sample-loading.gif">
+        <img src="~/Content/Images/empty-sample.png">
+        <img src="~/Content/Images/image-loading.gif">
     </div>
     <div id="text-templates-dialog">
         <div style="height: 30px;">
