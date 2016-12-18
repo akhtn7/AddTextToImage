@@ -1,5 +1,5 @@
-﻿using AddTextToImage.Domain.Entities;
-using AddTextToImage.Domain.Repository;
+﻿using AddTextToImage.Data.Service;
+using AddTextToImage.Domain.Entities;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;

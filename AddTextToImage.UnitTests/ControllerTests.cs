@@ -3,7 +3,6 @@ using System.Linq;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AddTextToImage.Domain.Entities;
-using AddTextToImage.Domain.Repository;
 using Moq;
 using AddTextToImage.WebUI.Controllers;
 using System.Net.Http;

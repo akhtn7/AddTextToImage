@@ -10,6 +10,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddTextToImage.WebUI", "AddTextToImage.WebUI\AddTextToImage.WebUI.csproj", "{CA0481E9-7025-4C99-A3D0-88145EB65CED}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddTextToImage.ImageGenarator", "AddTextToImage.ImageGenarator\AddTextToImage.ImageGenarator.csproj", "{FE2D38FA-0FA8-4C00-8C7F-24B95C64BC61}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D781A9D0-2F16-4F5C-8E15-11AB70715854} = {D781A9D0-2F16-4F5C-8E15-11AB70715854}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddTextToImage.Data", "AddTextToImage.Data\AddTextToImage.Data.csproj", "{D781A9D0-2F16-4F5C-8E15-11AB70715854}"
 EndProject

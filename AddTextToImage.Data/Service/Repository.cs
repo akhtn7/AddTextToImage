@@ -1,6 +1,5 @@
 ﻿using AddTextToImage.Data.Context;
 using AddTextToImage.Domain.Entities;
-using AddTextToImage.Domain.Repository;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

@@ -11,7 +11,6 @@ namespace AddTextToImage.WebUI.App_Start
     using Ninject;
     using Ninject.Web.Common;
     using AddTextToImage.Data.Context;
-    using AddTextToImage.Domain.Repository;
     using AddTextToImage.Domain.Entities;
     using AddTextToImage.Data.Service;
     using System.Web.Http;

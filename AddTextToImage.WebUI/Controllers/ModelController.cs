@@ -1,5 +1,5 @@
-﻿using AddTextToImage.Domain.Entities;
-using AddTextToImage.Domain.Repository;
+﻿using AddTextToImage.Data.Service;
+using AddTextToImage.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -48,7 +48,7 @@ namespace AddTextToImage.WebUI.Controllers
 
                     httpPostedFile.InputStream.Read(model.Image, 0, httpPostedFile.ContentLength);
 
-                    Size imageSize = Utils.getImageSize(model.Image);
+                    Size imageSize = Utils.GetImageSize(model.Image);
                     model.ImageHeight = imageSize.Height;
                     model.ImageWidth = imageSize.Width;
 

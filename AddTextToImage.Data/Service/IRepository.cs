@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AddTextToImage.Domain.Repository
+namespace AddTextToImage.Data.Service
 {
     public interface IRepository<T>
     {

@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
-using System.Drawing.Text;
-using System.Linq;
-using System.Web;
-using System.Web.Hosting;
-using AddTextToImage.Domain.Entities;
+﻿using System.Drawing;
 using System.IO;
 
 namespace AddTextToImage.WebUI
@@ -15,7 +6,7 @@ namespace AddTextToImage.WebUI
     public class Utils
     {
 
-        public static Size getImageSize(byte[] image)
+        public static Size GetImageSize(byte[] image)
         {
             Bitmap bmp;
 
@@ -31,6 +22,5 @@ namespace AddTextToImage.WebUI
 
             return result;
         }
-      
     }
 }

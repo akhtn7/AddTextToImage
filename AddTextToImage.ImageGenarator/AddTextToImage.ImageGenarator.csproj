@@ -44,6 +44,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImageUtils.cs" />
     <Compile Include="OutlineTextProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -53,6 +54,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AddTextToImage.Data\AddTextToImage.Data.csproj">
+      <Project>{d781a9d0-2f16-4f5c-8e15-11ab70715854}</Project>
+      <Name>AddTextToImage.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AddTextToImage.Domain\AddTextToImage.Domain.csproj">
       <Project>{c5e6c479-3e78-4a85-920c-41510151fed8}</Project>
       <Name>AddTextToImage.Domain</Name>
